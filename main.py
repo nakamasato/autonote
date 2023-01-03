@@ -1,10 +1,12 @@
-from confluence import ConfluenceClient, ConfluenceMock
-from atlassian import Confluence
-from html import generate, read
 import argparse
 import os
+from datetime import date
+from html import generate
 
+from atlassian import Confluence
 from dotenv import load_dotenv
+
+from confluence import ConfluenceClient, ConfluenceMock
 
 load_dotenv()
 
@@ -20,24 +22,32 @@ confluence = Confluence(
 def main():
     parser = argparse.ArgumentParser(description="generate lifelog")
     parser.add_argument(
-        "--confluence_root_page_id",
-        dest="confluence_root_page_id",
+        "--confluence_parent_page_id",
+        dest="confluence_parent_page_id",
         required=True,
-        help="Confluence root page id under which new Confluence pages will be created.",
+        help="Confluence parent page id under which new Confluence pages will be created.",
+    )
+    parser.add_argument(
+        "--title",
+        dest="title",
+        required=False,
+        default=f"default title {date.today().strftime('%Y-%m-%d')}",
+        help="title of new page",
     )
     parser.add_argument(
         "--dryrun",
         help="dryrun will not actually do the operation",
         action="store_true",
     )
+
     args = parser.parse_args()
     print(args)
     content = generate()
 
     client = ConfluenceMock() if args.dryrun else ConfluenceClient()
     client.create_page(
-        args.confluence_root_page_id,
-        title="monthly report",
+        args.confluence_parent_page_id,
+        title=args.title,
         body=content,
     )
 

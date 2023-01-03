@@ -1,4 +1,4 @@
-from datetime import date, timedelta, datetime
+from datetime import date, datetime, timedelta
 from enum import Enum
 
 from jinja2 import Environment, FileSystemLoader, Template
@@ -11,9 +11,6 @@ def get_first_monday(d):
     offset = -day_7.weekday()  # weekday = 0 means monday
     return day_7 + timedelta(offset)
 
-
-def get_last_day_of_month(d):
-    pass
 
 def generate(d=None, date_format="%Y/%m/%d"):
     if d is None:

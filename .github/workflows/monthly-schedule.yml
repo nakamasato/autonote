@@ -1,0 +1,27 @@
+name: monthly-schedule
+
+on:
+  schedule:
+    - "0 0 1 * *" # first day of each month
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+          cache: 'pip'
+
+      - name: pip install
+        run: pip install -r requirements.txt
+
+      - name: run
+        env:
+          CONFLUENCE_URL: ${{ secrets.CONFLUENCE_URL }}
+          CONFLUENCE_USERNAME: ${{ secrets.CONFLUENCE_USERNAME }}
+          CONFLUENCE_PASSWORD: ${{ secrets.CONFLUENCE_PASSWORD }}
+        run: |
+          python main.py --confluence_parent_page_id ${{ secrets.CONFLUENCE_ROOT_PAGE_ID }} --title "$(date '+%Y %b')"
