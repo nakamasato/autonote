@@ -20,7 +20,7 @@ confluence = Confluence(
 
 
 def main():
-    parser = argparse.ArgumentParser(description="generate lifelog")
+    parser = argparse.ArgumentParser(description="autodoc")
     parser.add_argument(
         "--confluence_parent_page_id",
         dest="confluence_parent_page_id",

@@ -1,5 +1,15 @@
 # autodoc
 
+## Installation
+
+```bash
+$ pip install autodoc
+```
+
+## Credits
+
+`autodoc` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
+
 ## Description
 
 ![](docs/diagram.drawio.svg)
@@ -25,11 +35,10 @@ Automate creating daily, weekly, monthly, and quarterly manual repetitive docume
     CONFLUENCE_PASSWORD=<TOKEN>
     ```
 
-1. venv
+1. conda env & install depndencies
     ```
-    python -m venv venv
-    . venv/bin/activate
-    pip install -r requirements.txt
+    conda activate autodoc
+    poetry install
     ```
 
 1. Create Confluence Page
@@ -44,7 +53,15 @@ Automate creating daily, weekly, monthly, and quarterly manual repetitive docume
     </td></tr></table>
 
 
+## Contributing
+
+Interested in contributing? Check out the contributing guidelines. Please note that this project is released with a Code of Conduct. By contributing to this project, you agree to abide by its terms.
+
+## License
+
+`autodoc` was created by Masato Naka. It is licensed under the terms of the MIT license.
 
 ## References
 1. [Pythonで久しぶりにHTMLを出力したくなったのでテンプレートについて調べる
 ](https://qiita.com/mima_ita/items/5405109b3b9e2db42332)
+1. [py-pkgs-cookiecutter](https://github.com/py-pkgs/py-pkgs-cookiecutter)
