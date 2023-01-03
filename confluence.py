@@ -39,10 +39,10 @@ class ConfluenceClient:
 def main():
     parser = argparse.ArgumentParser(description="Create Confluence page")
     parser.add_argument(
-        "--confluence_root_page_id",
-        dest="confluence_root_page_id",
+        "--confluence_parent_page_id",
+        dest="confluence_parent_page_id",
         required=True,
-        help="Confluence root page id under which new Confluence pages will be created.",
+        help="Confluence parent page id under which new Confluence pages will be created.",
     )
     parser.add_argument(
         "--dryrun",
@@ -54,7 +54,7 @@ def main():
 
     client = ConfluenceMock() if args.dryrun else ConfluenceClient()
     client.create_page(
-        args.confluence_root_page_id,
+        args.confluence_parent_page_id,
         title="title",
         body="body",
     )
