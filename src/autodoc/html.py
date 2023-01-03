@@ -1,15 +1,11 @@
 from datetime import date, datetime, timedelta
 from enum import Enum
+from utils import get_first_monday
 
 from jinja2 import Environment, FileSystemLoader, Template
 
 Period = Enum('Period', ['QUARTERLY', 'MONTHLY', 'WEEKLY', 'DAILY'])
 
-
-def get_first_monday(d):
-    day_7 = datetime(d.year, d.month, 7)
-    offset = -day_7.weekday()  # weekday = 0 means monday
-    return day_7 + timedelta(offset)
 
 
 def generate(d=None, date_format="%Y/%m/%d"):

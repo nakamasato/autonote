@@ -6,7 +6,7 @@ from html import generate
 from atlassian import Confluence
 from dotenv import load_dotenv
 
-from confluence import ConfluenceClient, ConfluenceMock
+from autodoc.confluence import ConfluenceClient, ConfluenceMock
 
 load_dotenv()
 
