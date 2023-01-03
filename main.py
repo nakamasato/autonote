@@ -1,22 +1,12 @@
 import argparse
-import os
 from datetime import date
-from html import generate
 
-from atlassian import Confluence
 from dotenv import load_dotenv
 
 from autodoc.confluence import ConfluenceClient, ConfluenceMock
+from autodoc.html import generate
 
 load_dotenv()
-
-
-confluence_url = os.getenv("CONFLUENCE_URL")  # https://xxx.atlassian.net
-confluence = Confluence(
-    url=confluence_url,
-    username=os.getenv("CONFLUENCE_USERNAME"),
-    password=os.getenv("CONFLUENCE_PASSWORD"),
-)
 
 
 def main():

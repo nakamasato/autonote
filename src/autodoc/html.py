@@ -1,8 +1,9 @@
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 from enum import Enum
-from utils import get_first_monday
 
-from jinja2 import Environment, FileSystemLoader, Template
+from jinja2 import Environment, PackageLoader
+
+from .utils import get_first_monday
 
 Period = Enum('Period', ['QUARTERLY', 'MONTHLY', 'WEEKLY', 'DAILY'])
 
@@ -26,7 +27,7 @@ def generate(d=None, date_format="%Y/%m/%d"):
         "title": "title",
         "weeks": weeks,
     }
-    env = Environment(loader=FileSystemLoader("./templates"))
+    env = Environment(loader=PackageLoader('autodoc', 'templates'))
     template = env.get_template("monthly_report.html.tpl")
     return template.render(data)
 
