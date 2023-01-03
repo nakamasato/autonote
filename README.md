@@ -34,7 +34,7 @@ Automate creating daily, weekly, monthly, and quarterly manual repetitive docume
 
 1. Create Confluence Page
     ```
-    python main.py --confluence_root_page_id <root_page_id>
+    python main.py --confluence_parent_page_id <root_page_id> --title <title>
     ```
 
     Generated Page:
