@@ -62,6 +62,7 @@ Interested in contributing? Check out the contributing guidelines. Please note t
 `autodoc` was created by Masato Naka. It is licensed under the terms of the MIT license.
 
 ## References
-1. [Pythonで久しぶりにHTMLを出力したくなったのでテンプレートについて調べる
-](https://qiita.com/mima_ita/items/5405109b3b9e2db42332)
+1. [Pythonで久しぶりにHTMLを出力したくなったのでテンプレートについて調べる](https://qiita.com/mima_ita/items/5405109b3b9e2db42332)
+1. [How to package a Python](https://py-pkgs.org/03-how-to-package-a-python)
 1. [py-pkgs-cookiecutter](https://github.com/py-pkgs/py-pkgs-cookiecutter)
+1. [package](https://packaging.python.org/en/latest/tutorials/packaging-projects/)
