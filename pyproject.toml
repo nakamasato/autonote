@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "autodoc"
+name = "autonote"
 version = "0.1.2a0"
-description = "Automate documentation"
+description = "Automate taking notes"
 authors = ["Masato Naka"]
 license = "MIT"
 readme = "README.md"

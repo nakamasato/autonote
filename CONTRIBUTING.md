@@ -40,10 +40,10 @@ If you are proposing a feature:
 
 ## Get Started!
 
-Ready to contribute? Here's how to set up `autodoc` for local development.
+Ready to contribute? Here's how to set up `autonote` for local development.
 
-1. Download a copy of `autodoc` locally.
-2. Install `autodoc` using `poetry`:
+1. Download a copy of `autonote` locally.
+2. Install `autonote` using `poetry`:
 
     ```console
     $ poetry install
@@ -69,5 +69,5 @@ Before you submit a pull request, check that it meets these guidelines:
 
 ## Code of Conduct
 
-Please note that the `autodoc` project is released with a
+Please note that the `autonote` project is released with a
 Code of Conduct. By contributing to this project you agree to abide by its terms.

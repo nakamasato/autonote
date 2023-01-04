@@ -1,6 +1,6 @@
 from datetime import date, datetime
 
-from autodoc.utils import get_first_monday
+from autonote.utils import get_first_monday
 
 
 def test_get_first_monday_jan():

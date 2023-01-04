@@ -1,4 +1,4 @@
-# autodoc
+# autonote
 
 ## Description
 
@@ -25,15 +25,15 @@ Automate creating daily, weekly, monthly, and quarterly manual repetitive docume
     export CONFLUENCE_PASSWORD=<TOKEN>
     ```
 
-1. Install autodoc
+1. Install autonote
     ```
-    pip install autodoc
+    pip install autonote
     ```
 
 1. Run
     ```python
-    from autodoc.confluence import ConfluenceClient, ConfluenceMock
-    from autodoc.html import generate
+    from autonote.confluence import ConfluenceClient, ConfluenceMock
+    from autonote.html import generate
 
     content = generate()
     ConfluenceClient().create_page(
@@ -52,7 +52,7 @@ Automate creating daily, weekly, monthly, and quarterly manual repetitive docume
 
 ## Credits
 
-`autodoc` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
+`autonote` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
 
 ## Contributing
 
@@ -60,7 +60,7 @@ Interested in contributing? Check out the contributing guidelines. Please note t
 
 ## License
 
-`autodoc` was created by Masato Naka. It is licensed under the terms of the MIT license.
+`autonote` was created by Masato Naka. It is licensed under the terms of the MIT license.
 
 ## References
 1. [How to package a Python](https://py-pkgs.org/03-how-to-package-a-python)

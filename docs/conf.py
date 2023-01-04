@@ -6,7 +6,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = u"autodoc"
+project = u"autonote"
 copyright = u"2023, Masato Naka"
 author = u"Masato Naka"
 

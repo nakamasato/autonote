@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=.
 set BUILDDIR=_build
-set SPHINXPROJ=autodoc
+set SPHINXPROJ=autonote
 
 if "%1" == "" goto help
 
