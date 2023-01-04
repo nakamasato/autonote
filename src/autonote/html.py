@@ -27,7 +27,7 @@ def generate(d=None, date_format="%Y/%m/%d"):
         "title": "title",
         "weeks": weeks,
     }
-    env = Environment(loader=PackageLoader('autodoc', 'templates'))
+    env = Environment(loader=PackageLoader('autonote', 'templates'))
     template = env.get_template("monthly_report.html.tpl")
     return template.render(data)
 
