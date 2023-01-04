@@ -1,15 +1,5 @@
 # autodoc
 
-## Installation
-
-```bash
-$ pip install autodoc
-```
-
-## Credits
-
-`autodoc` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
-
 ## Description
 
 ![](docs/diagram.drawio.svg)
@@ -27,23 +17,31 @@ Automate creating daily, weekly, monthly, and quarterly manual repetitive docume
 
 ## Steps
 
-1. Update env vars in `.env`
+1. Set environment variables:
 
     ```
-    CONFLUENCE_URL=https://xxx.atlassian.net
-    CONFLUENCE_USERNAME=<yourname>@domain.com
-    CONFLUENCE_PASSWORD=<TOKEN>
+    export CONFLUENCE_URL=https://xxx.atlassian.net
+    export CONFLUENCE_USERNAME=<yourname>@domain.com
+    export CONFLUENCE_PASSWORD=<TOKEN>
     ```
 
-1. conda env & install depndencies
+1. Install autodoc
     ```
-    conda activate autodoc
-    poetry install
+    pip install autodoc
     ```
 
-1. Create Confluence Page
-    ```
-    python main.py --confluence_parent_page_id <root_page_id> --title <title>
+1. Run
+    ```python
+    from autodoc.confluence import ConfluenceClient, ConfluenceMock
+    from autodoc.html import generate
+
+    content = generate()
+    ConfluenceClient().create_page(
+        <confluence_parent_page_id>,
+        title="title",
+        body=content,
+    )
+
     ```
 
     Generated Page:
@@ -52,6 +50,9 @@ Automate creating daily, weekly, monthly, and quarterly manual repetitive docume
     <img src="docs/confluence_page_0.png" width="200px" />
     </td></tr></table>
 
+## Credits
+
+`autodoc` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
 
 ## Contributing
 
