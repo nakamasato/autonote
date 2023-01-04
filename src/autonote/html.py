@@ -1,15 +1,12 @@
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 from enum import Enum
 
-from jinja2 import Environment, FileSystemLoader, Template
+from jinja2 import Environment, PackageLoader
+
+from .utils import get_first_monday
 
 Period = Enum('Period', ['QUARTERLY', 'MONTHLY', 'WEEKLY', 'DAILY'])
 
-
-def get_first_monday(d):
-    day_7 = datetime(d.year, d.month, 7)
-    offset = -day_7.weekday()  # weekday = 0 means monday
-    return day_7 + timedelta(offset)
 
 
 def generate(d=None, date_format="%Y/%m/%d"):
@@ -30,7 +27,7 @@ def generate(d=None, date_format="%Y/%m/%d"):
         "title": "title",
         "weeks": weeks,
     }
-    env = Environment(loader=FileSystemLoader("./templates"))
+    env = Environment(loader=PackageLoader('autonote', 'templates'))
     template = env.get_template("monthly_report.html.tpl")
     return template.render(data)
 
