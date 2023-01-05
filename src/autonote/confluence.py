@@ -23,7 +23,11 @@ class ConfluenceClient:
             password=os.getenv("CONFLUENCE_PASSWORD"),
         )
 
-    def create_page(self, parent_page_id, title="test", body="body"):
+    def create_page(self, parent_page_id, title, body):
+        """Create or update page.
+        If there already exists a page with the given title,
+        update the existing page.
+        """
         status = self.confluence.update_or_create(
             parent_page_id, title, body, editor="v2"
         )
