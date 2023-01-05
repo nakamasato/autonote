@@ -6,9 +6,9 @@
 
 # -- Project information -----------------------------------------------------
 
-project = u"autonote"
-copyright = u"2023, Masato Naka"
-author = u"Masato Naka"
+project = "autonote"
+copyright = "2023, Masato Naka"
+author = "Masato Naka"
 
 # -- General configuration ---------------------------------------------------
 
