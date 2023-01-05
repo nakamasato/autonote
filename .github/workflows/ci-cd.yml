@@ -36,7 +36,7 @@ jobs:
         run: poetry install
 
       - name: Lint
-        run:
+        run: |
           poetry run isort --check --diff .
           poetry run black --check --diff .
           poetry run flake8 .
