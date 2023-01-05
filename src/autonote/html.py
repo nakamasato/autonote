@@ -5,29 +5,30 @@ from jinja2 import Environment, PackageLoader
 
 from .utils import get_first_monday
 
-Period = Enum('Period', ['QUARTERLY', 'MONTHLY', 'WEEKLY', 'DAILY'])
-
+Period = Enum("Period", ["QUARTERLY", "MONTHLY", "WEEKLY", "DAILY"])
 
 
 def generate(d=None, date_format="%Y/%m/%d"):
     if d is None:
         d = datetime.today()
     monday = get_first_monday(d)
-    first_day_of_next_month = (
-        d.replace(day=1) +
-        timedelta(days=32)).replace(day=1)
+    first_day_of_next_month = (d.replace(day=1) + timedelta(days=32)).replace(day=1)
     weeks = []
     while monday < first_day_of_next_month:
         friday = monday + timedelta(days=4)
-        weeks.append({"start_date": monday.strftime(date_format),
-                     "end_date": friday.strftime(date_format)})
+        weeks.append(
+            {
+                "start_date": monday.strftime(date_format),
+                "end_date": friday.strftime(date_format),
+            }
+        )
         monday += timedelta(weeks=1)
 
     data = {
         "title": "title",
         "weeks": weeks,
     }
-    env = Environment(loader=PackageLoader('autonote', 'templates'))
+    env = Environment(loader=PackageLoader("autonote", "templates"))
     template = env.get_template("monthly_report.html.tpl")
     return template.render(data)
 

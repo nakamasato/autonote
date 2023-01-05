@@ -6,17 +6,14 @@ from atlassian import Confluence
 
 
 class ConfluenceMock:
-
     def create_page(self, parent_page_id, title, body):
         print(f"{parent_page_id}, {title}, {body}")
-        random_id = int("".join([str(random.randint(0, 10))
-                        for _ in range(10)]))
+        random_id = int("".join([str(random.randint(0, 10)) for _ in range(10)]))
         print(f"create page (dryrun) -> random id is generated {random_id}")
         return {"id": random_id}
 
 
 class ConfluenceClient:
-
     def __init__(self):
         # https://xxx.atlassian.net
         confluence_url = os.getenv("CONFLUENCE_URL")
@@ -26,11 +23,10 @@ class ConfluenceClient:
             password=os.getenv("CONFLUENCE_PASSWORD"),
         )
 
-    def create_page(
-        self, parent_page_id, title="test", body="body"
-    ):
+    def create_page(self, parent_page_id, title="test", body="body"):
         status = self.confluence.update_or_create(
-            parent_page_id, title, body, editor="v2")
+            parent_page_id, title, body, editor="v2"
+        )
         confluence_space_key = status["space"]["key"]
         print(f"create page -> key: {confluence_space_key} id: {status['id']}")
         return {"id": status["id"]}
