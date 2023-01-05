@@ -1,6 +1,10 @@
 name: ci-cd
 
-on: [push, pull_request]
+on:
+  pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
   ci:
@@ -19,6 +23,14 @@ jobs:
 
       - name: Install poetry
         uses: snok/install-poetry@v1
+
+      - name: Restore cached dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
 
       - name: Install package
         run: poetry install
@@ -58,6 +70,14 @@ jobs:
 
       - name: Install poetry
         uses: snok/install-poetry@v1
+
+      - name: "Restore cached dependencies"
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
 
       - name: Install package
         run: poetry install
