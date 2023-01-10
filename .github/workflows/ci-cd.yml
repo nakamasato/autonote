@@ -29,6 +29,7 @@ jobs:
           key: poetry  # increment to reset cache
 
       - name: Install poetry
+        if: steps.cached-poetry.outputs.cache-hit != 'true'
         uses: snok/install-poetry@v1
 
       - name: Restore cached dependencies
@@ -86,6 +87,7 @@ jobs:
           key: poetry  # increment to reset cache
 
       - name: Install poetry
+        if: steps.cached-poetry.outputs.cache-hit != 'true'
         uses: snok/install-poetry@v1
 
       - name: "Restore cached dependencies"
