@@ -93,8 +93,6 @@ Interested in contributing? Check out the contributing guidelines. Please note t
 `autonote` was created by Masato Naka. It is licensed under the terms of the MIT license.
 
 ## References
-1. [How to package a Python](https://py-pkgs.org/03-how-to-package-a-python)
-1. [py-pkgs-cookiecutter](https://github.com/py-pkgs/py-pkgs-cookiecutter)
-1. [package](https://packaging.python.org/en/latest/tutorials/packaging-projects/)
 1. [Atlassian Python API Confluence module](https://atlassian-python-api.readthedocs.io/confluence.html)
 1. [notion-client](https://pypi.org/project/notion-client/)
+1. [Notion API](https://developers.notion.com/)
