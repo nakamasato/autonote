@@ -1,13 +1,13 @@
 .PHONY: fmt
 fmt:
-	poetry run black src
-	poetry run isort src
+	poetry run black src tests
+	poetry run isort src tests
 
 .PHONY: lint
 lint:
-	poetry run isort --check --diff src
-	poetry run black --check --diff src
-	poetry run flake8 src
+	poetry run isort --check --diff src tests
+	poetry run black --check --diff src tests
+	poetry run flake8 src tests
 
 .PHONY: test
 test:

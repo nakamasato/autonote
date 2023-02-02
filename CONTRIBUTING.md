@@ -71,3 +71,9 @@ Before you submit a pull request, check that it meets these guidelines:
 
 Please note that the `autonote` project is released with a
 Code of Conduct. By contributing to this project you agree to abide by its terms.
+
+## References
+
+1. [How to package a Python](https://py-pkgs.org/03-how-to-package-a-python)
+1. [py-pkgs-cookiecutter](https://github.com/py-pkgs/py-pkgs-cookiecutter)
+1. [package](https://packaging.python.org/en/latest/tutorials/packaging-projects/)

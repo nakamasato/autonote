@@ -24,7 +24,9 @@ pip install autonote
 
 ## Usage
 
-### Create Confluence Page
+### 1. Confluence
+
+#### 1.1. Create a confluence page
 
 Currently only support pre-defined page. TODO: make it configurable
 
@@ -44,7 +46,7 @@ Currently only support pre-defined page. TODO: make it configurable
     content = generate()
     client = ConfluenceClient()
     client.create_page(
-        <confluence_parent_page_id>,
+        parent_page_id="<confluence_parent_page_id>",
         title="title",
         body=content,
     )
@@ -56,29 +58,60 @@ Currently only support pre-defined page. TODO: make it configurable
     <img src="docs/confluence_page_0.png" width="200px" />
     </td></tr></table>
 
-### Create Notion Page
+### 2. Notion
 
-Currently only support hardcoded page. TODO: make it configurable
+Prerequisite: Set environemnt variable
 
-1. Set environemnt variable
+```
+export NOTION_INTEGRATION_TOKEN=xxx
+```
 
-    ```
-    export NOTION_INTEGRATION_TOKEN=xxx
-    ```
+#### 2.1. Create a Notion page
 
-1. Run
-    ```python
-    from autonote.notion import NotionClient
-    from autonote.html import generate
+```python
+from autonote.notion import NotionClient
 
-    content = generate()
-    client = ConfluenceClient()
-    client.create_page(
-        <notion_parent_page_id>,
-        title="title",
-        body=content,
-    )
-    ```
+client = NotionClient()
+client.create_page(
+    parent_page_id="<parent_page_id>",
+    title="title",
+    body="body",
+    override=True, # update if exists
+)
+```
+
+Generated page:
+
+<table><tr><td>
+<img src="docs/notion_page_0.png" width="200px" />
+</td></tr></table>
+
+
+#### 2.2. Create Notion database page from a template
+
+```python
+from autonote.notion import NotionClient
+
+client = NotionClient()
+client.create_page_from_template(
+    template_id="<template_id>",
+    title="OKR 2023Q1",
+    override=True,
+)
+```
+
+Template page:
+
+<table><tr><td>
+<img src="docs/notion_template_page_0.png" width="200px" />
+</td></tr></table>
+
+Generated page:
+
+<table><tr><td>
+<img src="docs/notion_page_1.png" width="200px" />
+</td></tr></table>
+
 
 ## Credits
 
@@ -93,8 +126,6 @@ Interested in contributing? Check out the contributing guidelines. Please note t
 `autonote` was created by Masato Naka. It is licensed under the terms of the MIT license.
 
 ## References
-1. [How to package a Python](https://py-pkgs.org/03-how-to-package-a-python)
-1. [py-pkgs-cookiecutter](https://github.com/py-pkgs/py-pkgs-cookiecutter)
-1. [package](https://packaging.python.org/en/latest/tutorials/packaging-projects/)
 1. [Atlassian Python API Confluence module](https://atlassian-python-api.readthedocs.io/confluence.html)
 1. [notion-client](https://pypi.org/project/notion-client/)
+1. [Notion API](https://developers.notion.com/)
