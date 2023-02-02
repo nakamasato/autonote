@@ -65,7 +65,7 @@ class NotionPage:
         {'Start Date': {'id': '%3CAfZ', 'type': 'date', 'date': None},
         'Tags': {'id': 'FQLU', 'type': 'multi_select', 'multi_select': [{'id': 'f385f958-c732-4b78-986b-4ec5146c0fa6', 'name': 'OKR', 'color': 'green'}]},
         'End Date': {'id': 'Vemz', 'type': 'date', 'date': None},
-        'Name': {'id': 'title', 'type': 'title', 'title': [{'type': 'text', 'text': {'content': 'OKR template', 'link': None}, 'annotations': {'bold': False, 'italic': False, 'strikethrough': False, 'underline': False, 'code': False, 'color': 'default'}, 'plain_text': 'OKR template', 'href': None}]}}
+        'Name': {'id': 'title', 'type': 'title', 'title': [{'type': 'text', 'text': ...
 
         properties to set:
             {
@@ -210,7 +210,7 @@ class NotionClient:
             print(f"delete existing block {i} (block_id: {block_id})")
             self.client.blocks.delete(block_id=block_id)
         # append new blocks
-        print(f"append new blocks")
+        print("append new blocks")
         self.client.blocks.children.append(block_id=page_id, **{"children": contents})
 
 
