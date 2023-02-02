@@ -46,7 +46,7 @@ Currently only support pre-defined page. TODO: make it configurable
     content = generate()
     client = ConfluenceClient()
     client.create_page(
-        <confluence_parent_page_id>,
+        parent_page_id="<confluence_parent_page_id>",
         title="title",
         body=content,
     )
@@ -73,7 +73,7 @@ from autonote.notion import NotionClient
 
 client = NotionClient()
 client.create_page(
-    "5d98fac8f41d4801b3c337be70dabba1",
+    parent_page_id="<parent_page_id>",
     title="title",
     body="body",
     override=True, # update if exists
@@ -94,7 +94,7 @@ from autonote.notion import NotionClient
 
 client = NotionClient()
 client.create_page_from_template(
-    template_id="ffbf0ff4a80047fa84fa741ad8bcfbe9",
+    template_id="<template_id>",
     title="OKR 2023Q1",
     override=True,
 )
