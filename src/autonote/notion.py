@@ -11,7 +11,7 @@ class NotionMock:
 
 
 class NotionPage:
-    def __init__(self, title, body, contents=None, properties=None) -> None:
+    def __init__(self, title, body=None, contents=None, properties=None) -> None:
         """ """
         self.title = title
         self.body = body
@@ -75,14 +75,13 @@ class NotionPage:
             }
         """
         for k, v in properties.items():
-            if v[v["type"]] is None:  # skip empty property
+            # skip empty property and title
+            if v[v["type"]] is None or v["type"] == "title":
                 continue
             if v["type"] in {"created_by", "last_edited_by", "last_edited_time"}:
                 continue
             if v["type"] == "multi_select":
                 self.properties[k] = [{"name": e["name"]} for e in v["multi_select"]]
-            elif v["type"] == "title":
-                self.properties[v["id"]] = v[v["type"]]
             else:
                 self.properties[v["id"]] = v[v["type"]]
 
@@ -100,7 +99,7 @@ class NotionClient:
     def __init__(self):
         self.client = Client(auth=os.environ["NOTION_INTEGRATION_TOKEN"])
 
-    def create_page(self, parent_page_id, title, body):
+    def create_page(self, parent_page_id, title, body, override=False):
         """Create or update page.
         If there already exists pages with the given title,
         update the one with the latest last_edited_time.
@@ -109,17 +108,20 @@ class NotionClient:
             parent_page_id=parent_page_id
         )
         pages = self.search_pages(query=title)
-        if len(pages) == 0:
+        if len(pages) == 0 or override is False:
             res = self.client.pages.create(**kwargs)
             print(f"page created successfully (id: {res['id']})")
+            page_id = res["id"]
         else:
             page_id = pages[0]["id"]  # update the first matched page
-            print(f"page already exists (id: {page_id})")
-            print(kwargs)
             res = self.client.pages.update(page_id, **kwargs)
+            print(f"page updated successfully (id: {page_id})")
+
+        # update contents
+        self.update_contents(page_id=page_id, contents=kwargs["contents"])
         return {"id": res["id"]}
 
-    def create_page_from_template(self, template_id, title, body, override=False):
+    def create_page_from_template(self, template_id, title, override=False):
         """Create a new page from the given template_id.
         if override is True and there's a page with the same title, update the existing page.
         """
@@ -136,12 +138,10 @@ class NotionClient:
         blk = self.get_block(template_id)
         notion_page = NotionPage(  # only properties
             title=title,
-            body=body,
             contents=blk["results"],
             properties=tpl["properties"],
         )
         kwargs = notion_page.database_content(parent_database_id=database_id)
-        print(kwargs)
 
         # Create or update a page
         res = self.get_database(
@@ -151,12 +151,14 @@ class NotionClient:
         if len(res["results"]) == 0 or override is False:
             print(f"create a new page under database_id: {database_id}")
             res = self.client.pages.create(**kwargs)  # create an empty page
-            self.update_contents(page_id=res["id"], contents=kwargs["contents"])
+            page_id = res["id"]
         else:
             page_id = res["results"][0]["id"]
             print(f"page with title '{title}' already exists (id: {page_id})")
             res = self.client.pages.update(page_id, **kwargs)  # only update properties
-            self.update_contents(page_id=page_id, contents=kwargs["contents"])
+
+        # update contents
+        self.update_contents(page_id=page_id, contents=kwargs["contents"])
 
         return res
 

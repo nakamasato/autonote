@@ -24,7 +24,9 @@ pip install autonote
 
 ## Usage
 
-### Create Confluence Page
+### 1. Confluence
+
+#### 1.1. Create a confluence page
 
 Currently only support pre-defined page. TODO: make it configurable
 
@@ -56,29 +58,60 @@ Currently only support pre-defined page. TODO: make it configurable
     <img src="docs/confluence_page_0.png" width="200px" />
     </td></tr></table>
 
-### Create Notion Page
+### 2. Notion
 
-Currently only support hardcoded page. TODO: make it configurable
+Prerequisite: Set environemnt variable
 
-1. Set environemnt variable
+```
+export NOTION_INTEGRATION_TOKEN=xxx
+```
 
-    ```
-    export NOTION_INTEGRATION_TOKEN=xxx
-    ```
+#### 2.1. Create a Notion page
 
-1. Run
-    ```python
-    from autonote.notion import NotionClient
-    from autonote.html import generate
+```python
+from autonote.notion import NotionClient
 
-    content = generate()
-    client = ConfluenceClient()
-    client.create_page(
-        <notion_parent_page_id>,
-        title="title",
-        body=content,
-    )
-    ```
+client = NotionClient()
+client.create_page(
+    "5d98fac8f41d4801b3c337be70dabba1",
+    title="title",
+    body="body",
+    override=True, # update if exists
+)
+```
+
+Generated page:
+
+<table><tr><td>
+<img src="docs/notion_page_0.png" width="200px" />
+</td></tr></table>
+
+
+#### 2.2. Create Notion database page from a template
+
+```python
+from autonote.notion import NotionClient
+
+client = NotionClient()
+client.create_page_from_template(
+    template_id="ffbf0ff4a80047fa84fa741ad8bcfbe9",
+    title="OKR 2023Q1",
+    override=True,
+)
+```
+
+Template page:
+
+<table><tr><td>
+<img src="docs/notion_template_page_0.png" width="200px" />
+</td></tr></table>
+
+Generated page:
+
+<table><tr><td>
+<img src="docs/notion_page_1.png" width="200px" />
+</td></tr></table>
+
 
 ## Credits
 
