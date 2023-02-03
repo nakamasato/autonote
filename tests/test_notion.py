@@ -22,7 +22,7 @@ def test_notion_page_simple_database():
     ]
 
 
-def test_notion_page_with_properties():
+def test_notion_page_with_properties_tag():
     properties = {
         "Tags": {
             "id": "FQLU",
@@ -50,6 +50,73 @@ def test_notion_page_with_properties():
     }
 
 
+def test_notion_page_with_properties_date():
+    properties = {
+        "Start Date": {
+            "id": "k%3A%7Bd",
+            "type": "date",
+            "date": {"start": "2023-02-04", "end": "2023-02-10", "time_zone": None},
+        }
+    }
+    page = NotionPage(title="test title", body="test body")
+    page.update_properties(properties=properties)
+    assert page.properties == {
+        "title": [{"type": "text", "text": {"content": "test title"}}],
+        "k%3A%7Bd": {"start": "2023-02-04", "end": "2023-02-10", "time_zone": None},
+    }
+
+    page = NotionPage(title="test title", body="test body", properties=properties)
+    assert page.properties == {
+        "title": [{"type": "text", "text": {"content": "test title"}}],
+        "k%3A%7Bd": {"start": "2023-02-04", "end": "2023-02-10", "time_zone": None},
+    }
+
+
+def test_notion_page_with_properties_select():
+    properties = {
+        "Size": {
+            "id": "qyqF",
+            "type": "select",
+            "select": {
+                "id": "59a6cc39-cbe3-4cac-a013-6928a3b0705b",
+                "name": "small",
+                "color": "pink",
+            },
+        }
+    }
+    page = NotionPage(title="test title", body="test body", properties=properties)
+    assert page.properties == {
+        "title": [{"type": "text", "text": {"content": "test title"}}],
+        "qyqF": {
+            "id": "59a6cc39-cbe3-4cac-a013-6928a3b0705b",
+            "name": "small",
+            "color": "pink",
+        },
+    }
+
+
+def test_notion_page_with_properties_empty():
+    properties = {
+        "Start Date": {
+            "id": "k%3A%7Bd",
+            "type": "date",
+            "date": None,
+        }
+    }
+    page = NotionPage(title="test title", body="test body")
+    page.update_properties(properties=properties)
+    assert page.properties == {
+        "title": [{"type": "text", "text": {"content": "test title"}}],
+        "k%3A%7Bd": None,
+    }
+
+    page = NotionPage(title="test title", body="test body", properties=properties)
+    assert page.properties == {
+        "title": [{"type": "text", "text": {"content": "test title"}}],
+        "k%3A%7Bd": None,
+    }
+
+
 def test_notion_page_cannot_update_title():
     properties = {
         "Name": {
@@ -68,3 +135,15 @@ def test_notion_page_cannot_update_title():
     assert page.properties["title"] == [
         {"type": "text", "text": {"content": "test title"}}
     ]
+
+
+def test_notion_page_with_value():
+    properties = {
+        "Start Date": {
+            "id": "k%3A%7Bd",
+            "type": "date",
+            "date": {"start": None, "end": None, "time_zone": None},
+        }
+    }
+    page = NotionPage(title="test", body="test", properties=properties)
+    pass
