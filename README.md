@@ -112,6 +112,16 @@ Generated page:
 <img src="docs/notion_page_1.png" width="200px" />
 </td></tr></table>
 
+### 2.3. template + values
+
+Template with some values
+
+template:
+
+- `title`: YYYY-MM-DD test title
+- `date`: <pass date>
+
+
 
 ## Credits
 
