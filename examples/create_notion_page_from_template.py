@@ -4,6 +4,6 @@ client = NotionClient()
 
 client.create_page_from_template(
     template_id="ffbf0ff4a80047fa84fa741ad8bcfbe9",
-    title="OKR template",
+    title="OKR 2023Q1",
     override=True,
 )
