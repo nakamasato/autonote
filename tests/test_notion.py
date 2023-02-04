@@ -236,7 +236,7 @@ def test_notion_page_content_update_contents():
     assert content.contents == contents
 
 
-def test_notion_page_content_update_contents():
+def test_notion_page_content_update_contents_replace_datetime():
     contents = [
         {"type": "table_of_contents", "table_of_contents": {"color": "gray"}},
         {
@@ -277,7 +277,6 @@ def test_notion_page_content_update_contents():
         }
     ]
     content = NotionPageContent("body", contents=contents, replace_rules=replace_rules)
-    print(contents)
     assert (
         content.contents[2]["heading_1"]["rich_text"][0]["text"]["content"]
         == "2023-01-01 (月)"
