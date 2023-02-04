@@ -1,5 +1,6 @@
 import argparse
 import os
+from datetime import datetime, timedelta
 
 from notion_client import Client
 
@@ -11,23 +12,22 @@ class NotionMock:
 
 
 class NotionPage:
+    """NotionPage contains parent and properties"""
+
     def __init__(
-        self, title, body=None, contents=None, properties=None, **kwargs
+        self, title: str, parent_type: str, properties: dict = None, **kwargs
     ) -> None:
-        """ """
+        """Initialize NotionPage.
+
+        Args:
+            title(str): required to determine Notion page by title
+            parent_type(str): one of 'database_id' or 'page_id'
+            properties(dict): Notion property item. https://developers.notion.com/reference/property-item-object
+        """
         self.title = title
-        self.body = body
-        self.contents = [
-            {
-                "object": "block",
-                "type": "heading_2",
-                "heading_2": {
-                    "rich_text": [{"type": "text", "text": {"content": self.body}}]
-                },
-            },
-        ]
-        if contents is not None:
-            self.update_contents(contents)
+        if parent_type not in {"database_id", "page_id"}:
+            raise ValueError("parent_type must be one of 'database_id' or 'page_id'")
+        self.parent_type = parent_type
         self.properties = {
             "title": [
                 {
@@ -39,26 +39,13 @@ class NotionPage:
         if properties is not None:
             self.update_properties(properties, **kwargs)
 
-    def page_content(self, parent_page_id: str) -> dict:
-        """Generate a page content.
-        Currently most of the content is hardcoded.
-        https://developers.notion.com/reference/post-page
-        """
-        return self._contents(parent_type="page_id", parent_id=parent_page_id)
-
-    def database_content(self, parent_database_id: str) -> dict:
-        return self._contents(parent_type="database_id", parent_id=parent_database_id)
-
-    def _contents(self, parent_type: str, parent_id: str) -> dict:
-        if parent_type not in {"database_id", "page_id"}:
-            raise ValueError("parent_type must be one of 'database_id' or 'page_id'")
+    def pages_kwargs(self, parent_id: str) -> dict:
         return {
             "parent": {
-                "type": parent_type,
-                parent_type: parent_id,
+                "type": self.parent_type,
+                self.parent_type: parent_id,
             },
             "properties": self.properties,
-            "contents": self.contents,
         }
 
     def update_properties(self, properties: dict, **kwargs) -> None:
@@ -105,14 +92,91 @@ class NotionPage:
             else:
                 print(f"{k} is not in properties")
 
-    def update_contents(self, contents: dict) -> None:
+
+class NotionPageContent:
+    def __init__(self, body=None, contents=None, **kwargs):
         self.contents = [
             {
-                "type": blk["type"],
-                blk["type"]: blk[blk["type"]],
-            }
-            for blk in contents
+                "object": "block",
+                "type": "heading_2",
+                "heading_2": {
+                    "rich_text": [{"type": "text", "text": {"content": body}}]
+                },
+            },
         ]
+        if contents is not None:
+            self.update_contents(contents, **kwargs)
+
+    def update_contents(self, contents: dict, **kwargs) -> None:
+        """Update contents with contents and **kwargs
+
+        Args:
+            contents (list): list of dict that contains type and the value e.g.
+                {'type': 'table_of_contents', 'table_of_contents': {'color': 'gray'}}
+                blocks that are returned from blocks.children.list["result"]
+            kwargs (dict): you can pass replacement rule for the content.
+
+        Example of contents:
+        [{'type': 'table_of_contents', 'table_of_contents': {'color': 'gray'}}
+        {'type': 'heading_1', 'heading_1': {'rich_text': [{'type': 'text', 'text':...
+        {'type': 'numbered_list_item', 'numbered_list_item': {'rich_text': [], 'color': 'default'}}
+        {'type': 'paragraph', 'paragraph': {'rich_text': [], 'color': 'default'}}]
+        """
+        self.contents = contents
+        for e in self.contents:
+            print(e)
+
+        # update value from replace_rules
+        SUPPORTED_REPLACE_TYPES = ["datetime"]
+        for rule in kwargs.get("replace_rules", []):
+            if rule.get("replace_type") not in SUPPORTED_REPLACE_TYPES:
+                raise ValueError("'replace_type' is must be 'datetime'.")
+            replace_type = rule.pop("replace_type")
+            if replace_type == "datetime":
+                self.update_contents_by_datetime(**rule)
+
+    def update_contents_by_datetime(
+        self, block_types, replace_str, date_format, start_date, increment=False
+    ):
+        """Update contents with specified start_date
+        Args:
+            block_types (list): block types e.g. ["heading_1", "heading_2"]
+            replace_str (str): the target string to replace
+            date_format (str): date format e.g. '%Y/%m/%d'
+            start_date (str): start date in the format of 'date_format'. e.g. '2023/02/04'
+            increment (bool): true if increment during replacement
+        """
+
+        SUPPORTED_BLOCK_TYPES = [
+            "heading_1",
+            "heading_2",
+            "heading_3",
+        ]
+        start_dt = datetime.strptime(start_date, date_format)
+        dt = start_dt
+        for blk in self.contents:
+            if blk["type"] not in SUPPORTED_BLOCK_TYPES:
+                continue
+            if blk["type"] in block_types:
+                str_before = blk[blk["type"]]["rich_text"][0]["plain_text"]
+                blk[blk["type"]]["rich_text"][0]["text"]["content"] = blk[blk["type"]][
+                    "rich_text"
+                ][0]["text"]["content"].replace(
+                    replace_str,
+                    dt.strftime(date_format),
+                )
+                blk[blk["type"]]["rich_text"][0]["plain_text"] = blk[blk["type"]][
+                    "rich_text"
+                ][0]["plain_text"].replace(
+                    replace_str,
+                    dt.strftime(date_format),
+                )
+                str_after = blk[blk["type"]]["rich_text"][0]["plain_text"]
+                print(
+                    f"updating contents type: {blk['type']}, {str_before=}, {str_after=}"
+                )
+                if increment is True:
+                    dt += timedelta(days=1)
 
 
 class NotionClient:
@@ -124,21 +188,22 @@ class NotionClient:
         If there already exists pages with the given title,
         update the one with the latest last_edited_time.
         """
-        kwargs = NotionPage(title=title, body=body).page_content(
-            parent_page_id=parent_page_id
+        pages_kwargs = NotionPage(title=title, parent_type="page_id").pages_kwargs(
+            parent_id=parent_page_id,
         )
+        content = NotionPageContent(body=body)
         pages = self.search_pages(query=title)
         if len(pages) == 0 or override is False:
-            res = self.client.pages.create(**kwargs)
+            res = self.client.pages.create(**pages_kwargs)
             print(f"page created successfully (id: {res['id']})")
             page_id = res["id"]
         else:
             page_id = pages[0]["id"]  # update the first matched page
-            res = self.client.pages.update(page_id, **kwargs)
+            res = self.client.pages.update(page_id, **pages_kwargs)
             print(f"page updated successfully (id: {page_id})")
 
         # update contents
-        self.update_contents(page_id=page_id, contents=kwargs["contents"])
+        self.update_contents(page_id=page_id, contents=content.contents)
         return {"id": res["id"]}
 
     def create_page_from_template(self, template_id, title, override=False, **kwargs):
@@ -147,23 +212,23 @@ class NotionClient:
         You can pass values of properties via kwargs
         """
 
-        # Prepare contents from template
+        # Prepare NotionPage and NotionPageContent from template
         tpl = self.get_page(page_id=template_id)
         if tpl["parent"]["type"] != "database_id":
             raise ValueError(
                 "The given template_id {template_id} is not a database template."
             )
         database_id = tpl["parent"]["database_id"]
-        # To get contents of a page, Retrieve block children
-        # https://developers.notion.com/reference/get-block-children
-        blk = self.get_block(template_id)
-        notion_page = NotionPage(  # only properties
+        pages_kwargs = NotionPage(  # only properties
             title=title,
-            contents=blk["results"],
+            parent_type="database_id",
             properties=tpl["properties"],
             **kwargs,  # update properties
-        )
-        contents_kwargs = notion_page.database_content(parent_database_id=database_id)
+        ).pages_kwargs(parent_id=database_id)
+        # To get contents of a page, Retrieve block children
+        # https://developers.notion.com/reference/get-block-children
+        child_blocks = self.get_child_blocks(block_id=template_id)
+        content = NotionPageContent(contents=child_blocks["results"], **kwargs)
 
         # Create or update a page
         res = self.get_database(
@@ -172,17 +237,17 @@ class NotionClient:
         )
         if len(res["results"]) == 0 or override is False:
             print(f"create a new page under database_id: {database_id}")
-            res = self.client.pages.create(**contents_kwargs)  # create an empty page
+            res = self.client.pages.create(**pages_kwargs)  # create an empty page
             page_id = res["id"]
         else:
             page_id = res["results"][0]["id"]
             print(f"page with title '{title}' already exists (id: {page_id})")
             res = self.client.pages.update(
-                page_id, **contents_kwargs
+                page_id, **pages_kwargs
             )  # only update properties
 
         # update contents
-        self.update_contents(page_id=page_id, contents=contents_kwargs["contents"])
+        self.update_contents(page_id=page_id, contents=content.contents)
 
         return res
 
@@ -216,7 +281,7 @@ class NotionClient:
         """
         return self.client.databases.query(database_id=database_id, **kwargs)
 
-    def get_block(self, block_id: str) -> dict:
+    def get_child_blocks(self, block_id: str) -> dict:
         """Get children blocks.
         You can pass page_id to get the contents of a page.
         """
