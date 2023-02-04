@@ -11,7 +11,9 @@ class NotionMock:
 
 
 class NotionPage:
-    def __init__(self, title, body=None, contents=None, properties=None) -> None:
+    def __init__(
+        self, title, body=None, contents=None, properties=None, **kwargs
+    ) -> None:
         """ """
         self.title = title
         self.body = body
@@ -35,7 +37,7 @@ class NotionPage:
             ]
         }
         if properties is not None:
-            self.update_properties(properties)
+            self.update_properties(properties, **kwargs)
 
     def page_content(self, parent_page_id: str) -> dict:
         """Generate a page content.
@@ -59,7 +61,7 @@ class NotionPage:
             "contents": self.contents,
         }
 
-    def update_properties(self, properties: dict) -> None:
+    def update_properties(self, properties: dict, **kwargs) -> None:
         """Update properties
         Example properties obtain from database page:
         {'Start Date': {'id': '%3CAfZ', 'type': 'date', 'date': None},
@@ -75,15 +77,33 @@ class NotionPage:
             }
         """
         for k, v in properties.items():
-            # skip empty property and title
-            if v[v["type"]] is None or v["type"] == "title":
+            # skip title
+            if v["type"] == "title":
                 continue
-            if v["type"] in {"created_by", "last_edited_by", "last_edited_time"}:
+            elif v["type"] in {
+                "created_by",
+                "last_edited_by",
+                "last_edited_time",
+                "created_time",
+            }:
                 continue
-            if v["type"] == "multi_select":
-                self.properties[k] = [{"name": e["name"]} for e in v["multi_select"]]
             else:
-                self.properties[v["id"]] = v[v["type"]]
+                # TODO: this might not work for some data type.
+                self.properties[k] = v[v["type"]]
+                print(f"update property {k}: {v[v['type']]}")
+
+        # update value from kwargs
+        for k, v in kwargs.items():
+            if k in self.properties:
+                if self.properties[k] is None:
+                    self.properties[k] = v
+                else:
+                    self.properties[k].update(v)
+                print(
+                    f"update property with value ({v}). new: {k}: {self.properties[k]}"
+                )
+            else:
+                print(f"{k} is not in properties")
 
     def update_contents(self, contents: dict) -> None:
         self.contents = [
@@ -121,9 +141,10 @@ class NotionClient:
         self.update_contents(page_id=page_id, contents=kwargs["contents"])
         return {"id": res["id"]}
 
-    def create_page_from_template(self, template_id, title, override=False):
+    def create_page_from_template(self, template_id, title, override=False, **kwargs):
         """Create a new page from the given template_id.
         if override is True and there's a page with the same title, update the existing page.
+        You can pass values of properties via kwargs
         """
 
         # Prepare contents from template
@@ -140,8 +161,9 @@ class NotionClient:
             title=title,
             contents=blk["results"],
             properties=tpl["properties"],
+            **kwargs,  # update properties
         )
-        kwargs = notion_page.database_content(parent_database_id=database_id)
+        contents_kwargs = notion_page.database_content(parent_database_id=database_id)
 
         # Create or update a page
         res = self.get_database(
@@ -150,15 +172,17 @@ class NotionClient:
         )
         if len(res["results"]) == 0 or override is False:
             print(f"create a new page under database_id: {database_id}")
-            res = self.client.pages.create(**kwargs)  # create an empty page
+            res = self.client.pages.create(**contents_kwargs)  # create an empty page
             page_id = res["id"]
         else:
             page_id = res["results"][0]["id"]
             print(f"page with title '{title}' already exists (id: {page_id})")
-            res = self.client.pages.update(page_id, **kwargs)  # only update properties
+            res = self.client.pages.update(
+                page_id, **contents_kwargs
+            )  # only update properties
 
         # update contents
-        self.update_contents(page_id=page_id, contents=kwargs["contents"])
+        self.update_contents(page_id=page_id, contents=contents_kwargs["contents"])
 
         return res
 

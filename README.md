@@ -112,6 +112,25 @@ Generated page:
 <img src="docs/notion_page_1.png" width="200px" />
 </td></tr></table>
 
+### 2.3. Create Notion page from a template with dynamic values
+
+```python
+from autonote.notion import NotionClient
+
+client = NotionClient()
+kwargs={"Date": {"start": "2023-01-01", "end": "2023-03-31"}}
+client.create_page_from_template(
+    template_id="<template_id>",
+    title="OKR 2023Q1",
+    override=True,
+    **kwargs
+)
+```
+
+<table><tr><td>
+<img src="docs/notion_page_2.png" width="200px" />
+</td></tr></table>
+
 
 ## Credits
 
