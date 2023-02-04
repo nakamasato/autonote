@@ -234,3 +234,55 @@ def test_notion_page_content_update_contents():
     ]
     content = NotionPageContent("body", contents=contents)
     assert content.contents == contents
+
+
+def test_notion_page_content_update_contents():
+    contents = [
+        {"type": "table_of_contents", "table_of_contents": {"color": "gray"}},
+        {
+            "type": "numbered_list_item",
+            "numbered_list_item": {"rich_text": [], "color": "default"},
+        },
+        {
+            "type": "heading_1",
+            "heading_1": {
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {"content": "YYYY/MM/DD (月)", "link": None},
+                        "annotations": {
+                            "bold": False,
+                            "italic": False,
+                            "strikethrough": False,
+                            "underline": False,
+                            "code": False,
+                            "color": "default",
+                        },
+                        "plain_text": "YYYY/MM/DD (月)",
+                        "href": None,
+                    }
+                ],
+                "is_toggleable": False,
+                "color": "default",
+            },
+        },
+    ]
+    replace_rules = [
+        {
+            "replace_type": "datetime",
+            "block_types": "heading_1",
+            "replace_str": "YYYY/MM/DD",
+            "date_format": "%Y-%m-%d",
+            "start_date": "2023-01-01",
+        }
+    ]
+    content = NotionPageContent("body", contents=contents, replace_rules=replace_rules)
+    print(contents)
+    assert (
+        content.contents[2]["heading_1"]["rich_text"][0]["text"]["content"]
+        == "2023-01-01 (月)"
+    )
+    assert (
+        content.contents[2]["heading_1"]["rich_text"][0]["plain_text"]
+        == "2023-01-01 (月)"
+    )
