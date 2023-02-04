@@ -11,23 +11,22 @@ class NotionMock:
 
 
 class NotionPage:
+    """NotionPage contains parent and properties"""
+
     def __init__(
-        self, title, body=None, contents=None, properties=None, **kwargs
+        self, title: str, parent_type: str, properties: dict = None, **kwargs
     ) -> None:
-        """ """
+        """Initialize NotionPage.
+
+        Args:
+            title(str): required to determine Notion page by title
+            parent_type(str): one of 'database_id' or 'page_id'
+            properties(dict): Notion property item. https://developers.notion.com/reference/property-item-object
+        """
         self.title = title
-        self.body = body
-        self.contents = [
-            {
-                "object": "block",
-                "type": "heading_2",
-                "heading_2": {
-                    "rich_text": [{"type": "text", "text": {"content": self.body}}]
-                },
-            },
-        ]
-        if contents is not None:
-            self.update_contents(contents)
+        if parent_type not in {"database_id", "page_id"}:
+            raise ValueError("parent_type must be one of 'database_id' or 'page_id'")
+        self.parent_type = parent_type
         self.properties = {
             "title": [
                 {
@@ -39,26 +38,13 @@ class NotionPage:
         if properties is not None:
             self.update_properties(properties, **kwargs)
 
-    def page_content(self, parent_page_id: str) -> dict:
-        """Generate a page content.
-        Currently most of the content is hardcoded.
-        https://developers.notion.com/reference/post-page
-        """
-        return self._contents(parent_type="page_id", parent_id=parent_page_id)
-
-    def database_content(self, parent_database_id: str) -> dict:
-        return self._contents(parent_type="database_id", parent_id=parent_database_id)
-
-    def _contents(self, parent_type: str, parent_id: str) -> dict:
-        if parent_type not in {"database_id", "page_id"}:
-            raise ValueError("parent_type must be one of 'database_id' or 'page_id'")
+    def pages_kwargs(self, parent_id: str) -> dict:
         return {
             "parent": {
-                "type": parent_type,
-                parent_type: parent_id,
+                "type": self.parent_type,
+                self.parent_type: parent_id,
             },
             "properties": self.properties,
-            "contents": self.contents,
         }
 
     def update_properties(self, properties: dict, **kwargs) -> None:
@@ -105,6 +91,21 @@ class NotionPage:
             else:
                 print(f"{k} is not in properties")
 
+
+class NotionPageContent:
+    def __init__(self, body=None, contents=None):
+        self.contents = [
+            {
+                "object": "block",
+                "type": "heading_2",
+                "heading_2": {
+                    "rich_text": [{"type": "text", "text": {"content": body}}]
+                },
+            },
+        ]
+        if contents is not None:
+            self.update_contents(contents)
+
     def update_contents(self, contents: dict) -> None:
         self.contents = [
             {
@@ -124,21 +125,22 @@ class NotionClient:
         If there already exists pages with the given title,
         update the one with the latest last_edited_time.
         """
-        kwargs = NotionPage(title=title, body=body).page_content(
-            parent_page_id=parent_page_id
+        pages_kwargs = NotionPage(title=title, parent_type="page_id").pages_kwargs(
+            parent_id=parent_page_id,
         )
+        content = NotionPageContent(body=body)
         pages = self.search_pages(query=title)
         if len(pages) == 0 or override is False:
-            res = self.client.pages.create(**kwargs)
+            res = self.client.pages.create(**pages_kwargs)
             print(f"page created successfully (id: {res['id']})")
             page_id = res["id"]
         else:
             page_id = pages[0]["id"]  # update the first matched page
-            res = self.client.pages.update(page_id, **kwargs)
+            res = self.client.pages.update(page_id, **pages_kwargs)
             print(f"page updated successfully (id: {page_id})")
 
         # update contents
-        self.update_contents(page_id=page_id, contents=kwargs["contents"])
+        self.update_contents(page_id=page_id, contents=content.contents)
         return {"id": res["id"]}
 
     def create_page_from_template(self, template_id, title, override=False, **kwargs):
@@ -157,13 +159,13 @@ class NotionClient:
         # To get contents of a page, Retrieve block children
         # https://developers.notion.com/reference/get-block-children
         blk = self.get_block(template_id)
-        notion_page = NotionPage(  # only properties
+        pages_kwargs = NotionPage(  # only properties
             title=title,
-            contents=blk["results"],
+            parent_type="database_id",
             properties=tpl["properties"],
             **kwargs,  # update properties
-        )
-        contents_kwargs = notion_page.database_content(parent_database_id=database_id)
+        ).pages_kwargs(parent_id=database_id)
+        content = NotionPageContent(contents=blk["results"])
 
         # Create or update a page
         res = self.get_database(
@@ -172,17 +174,17 @@ class NotionClient:
         )
         if len(res["results"]) == 0 or override is False:
             print(f"create a new page under database_id: {database_id}")
-            res = self.client.pages.create(**contents_kwargs)  # create an empty page
+            res = self.client.pages.create(**pages_kwargs)  # create an empty page
             page_id = res["id"]
         else:
             page_id = res["results"][0]["id"]
             print(f"page with title '{title}' already exists (id: {page_id})")
             res = self.client.pages.update(
-                page_id, **contents_kwargs
+                page_id, **pages_kwargs
             )  # only update properties
 
         # update contents
-        self.update_contents(page_id=page_id, contents=contents_kwargs["contents"])
+        self.update_contents(page_id=page_id, contents=content.contents)
 
         return res
 
