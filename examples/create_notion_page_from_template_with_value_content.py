@@ -6,12 +6,12 @@ kwargs = {
     "Date": {"start": "2023-02-04", "end": "2023-02-10"},
     "replace_rules": [
         {
-            "block_types": ["heading_1"],
-            "replace_str": "YYYY/MM/DD",
-            "replace_type": "datetime",
-            "date_format": "%Y/%m/%d",
-            "start_date": "2023/02/04",
-            "increment": True,
+            "block_types": ["heading_1"],  # target blocks to apply replacement
+            "replace_str": "YYYY/MM/DD",  # replacement string match
+            "replace_type": "datetime",  # currently only support "datetime"
+            "date_format": "%Y/%m/%d",  # used to parse `start_date` and generate string from datetime when interpolating
+            "start_date": "2023/02/04",  # start date
+            "increment": True,  # if true, increment 1 day every time replacement is executed
         },
     ],
 }
