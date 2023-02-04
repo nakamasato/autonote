@@ -111,16 +111,18 @@ class NotionPageContent:
         """Update contents with contents and **kwargs
 
         Args:
-            contents (dict): blocks that are returned from blocks.children.list["result"]
+            contents (list): list of dict that contains type and the value e.g.
+                {'type': 'table_of_contents', 'table_of_contents': {'color': 'gray'}}
+                blocks that are returned from blocks.children.list["result"]
             kwargs (dict): you can pass replacement rule for the content.
+
+        Example of contents:
+        [{'type': 'table_of_contents', 'table_of_contents': {'color': 'gray'}}
+        {'type': 'heading_1', 'heading_1': {'rich_text': [{'type': 'text', 'text':...
+        {'type': 'numbered_list_item', 'numbered_list_item': {'rich_text': [], 'color': 'default'}}
+        {'type': 'paragraph', 'paragraph': {'rich_text': [], 'color': 'default'}}]
         """
-        self.contents = [
-            {
-                "type": blk["type"],
-                blk["type"]: blk[blk["type"]],
-            }
-            for blk in contents
-        ]
+        self.contents = contents
         for e in self.contents:
             print(e)
 

@@ -1,4 +1,4 @@
-from autonote.notion import NotionPage
+from autonote.notion import NotionPage, NotionPageContent
 
 
 def test_notion_page_simple_database():
@@ -180,3 +180,50 @@ def test_notion_page_update_template_property_with_nonexisting_value():
     assert page.properties == {
         "title": [{"type": "text", "text": {"content": "test title"}}],
     }
+
+
+def test_notion_page_content_from_body():
+    content = NotionPageContent("body")
+    assert content.contents == [
+        {
+            "object": "block",
+            "type": "heading_2",
+            "heading_2": {"rich_text": [{"type": "text", "text": {"content": "body"}}]},
+        }
+    ]
+
+
+def test_notion_page_content_update_contents():
+    contents = [
+        {"type": "table_of_contents", "table_of_contents": {"color": "gray"}},
+        {
+            "type": "heading_1",
+            "heading_1": {
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {"content": "YYYY/MM/DD (月)", "link": None},
+                        "annotations": {
+                            "bold": False,
+                            "italic": False,
+                            "strikethrough": False,
+                            "underline": False,
+                            "code": False,
+                            "color": "default",
+                        },
+                        "plain_text": "YYYY/MM/DD (月)",
+                        "href": None,
+                    }
+                ],
+                "is_toggleable": False,
+                "color": "default",
+            },
+        },
+        {
+            "type": "numbered_list_item",
+            "numbered_list_item": {"rich_text": [], "color": "default"},
+        },
+        {"type": "paragraph", "paragraph": {"rich_text": [], "color": "default"}},
+    ]
+    content = NotionPageContent("body", contents=contents)
+    assert content.contents == contents
