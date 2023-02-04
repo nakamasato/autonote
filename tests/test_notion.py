@@ -177,3 +177,11 @@ def test_notion_page_update_none_template_property_with_value_date():
     kwargs = {"Start Date": {"start": "2023-02-04", "end": "2023-02-10"}}
     page = NotionPage(title="test", body="test", properties=properties, **kwargs)
     assert page.properties["Start Date"] == {"start": "2023-02-04", "end": "2023-02-10"}
+
+
+def test_notion_page_update_template_property_with_nonexisting_value():
+    kwargs = {"nonexisting key": {"start": "2023-02-04", "end": "2023-02-10"}}
+    page = NotionPage(title="test title", body="test", **kwargs)
+    assert page.properties == {
+        "title": [{"type": "text", "text": {"content": "test title"}}],
+    }
