@@ -1,4 +1,11 @@
+import pytest
+
 from autonote.notion import NotionPage, NotionPageContent
+
+
+def test_notion_page_parent_type():
+    with pytest.raises(ValueError):
+        NotionPage(title="test", parent_type="invalid")
 
 
 def test_notion_page_simple_database():
