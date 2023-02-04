@@ -80,20 +80,30 @@ class NotionPage:
             # skip title
             if v["type"] == "title":
                 continue
-            elif v["type"] in {"created_by", "last_edited_by", "last_edited_time"}:
+            elif v["type"] in {
+                "created_by",
+                "last_edited_by",
+                "last_edited_time",
+                "created_time",
+            }:
                 continue
-            elif v["type"] == "multi_select":
-                self.properties[k] = [{"name": e["name"]} for e in v["multi_select"]]
             else:
-                # TODO: this might not work for some data time.
-                self.properties[v["id"]] = v[v["type"]]
+                # TODO: this might not work for some data type.
+                self.properties[k] = v[v["type"]]
+                print(f"update property {k}: {v[v['type']]}")
 
         # update value from kwargs
         for k, v in kwargs.items():
             if k in self.properties:
-                cur = self.properties[k]
-                print(f"update property: {k}, cur: {cur}, v: {v}")
-                # self.properties[v["id"]] = v
+                if self.properties[k] is None:
+                    self.properties[k] = v
+                else:
+                    self.properties[k].update(v)
+                print(
+                    f"update property with value ({v}). new: {k}: {self.properties[k]}"
+                )
+            else:
+                print(f"{k} is not in properties")
 
     def update_contents(self, contents: dict) -> None:
         self.contents = [
@@ -151,7 +161,7 @@ class NotionClient:
             title=title,
             contents=blk["results"],
             properties=tpl["properties"],
-            kwargs=kwargs,  # update properties
+            **kwargs,  # update properties
         )
         contents_kwargs = notion_page.database_content(parent_database_id=database_id)
 

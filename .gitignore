@@ -144,3 +144,4 @@ dmypy.json
 # custom
 .env
 venv
+pytest.xml

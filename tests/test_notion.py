@@ -40,13 +40,25 @@ def test_notion_page_with_properties_tag():
     page.update_properties(properties=properties)
     assert page.properties == {
         "title": [{"type": "text", "text": {"content": "test title"}}],
-        "Tags": [{"name": "OKR"}],
+        "Tags": [
+            {
+                "id": "f385f958-c732-4b78-986b-4ec5146c0fa6",
+                "name": "OKR",
+                "color": "green",
+            }
+        ],
     }
 
     page = NotionPage(title="test title", body="test body", properties=properties)
     assert page.properties == {
         "title": [{"type": "text", "text": {"content": "test title"}}],
-        "Tags": [{"name": "OKR"}],
+        "Tags": [
+            {
+                "id": "f385f958-c732-4b78-986b-4ec5146c0fa6",
+                "name": "OKR",
+                "color": "green",
+            }
+        ],
     }
 
 
@@ -62,13 +74,13 @@ def test_notion_page_with_properties_date():
     page.update_properties(properties=properties)
     assert page.properties == {
         "title": [{"type": "text", "text": {"content": "test title"}}],
-        "k%3A%7Bd": {"start": "2023-02-04", "end": "2023-02-10", "time_zone": None},
+        "Start Date": {"start": "2023-02-04", "end": "2023-02-10", "time_zone": None},
     }
 
     page = NotionPage(title="test title", body="test body", properties=properties)
     assert page.properties == {
         "title": [{"type": "text", "text": {"content": "test title"}}],
-        "k%3A%7Bd": {"start": "2023-02-04", "end": "2023-02-10", "time_zone": None},
+        "Start Date": {"start": "2023-02-04", "end": "2023-02-10", "time_zone": None},
     }
 
 
@@ -87,7 +99,7 @@ def test_notion_page_with_properties_select():
     page = NotionPage(title="test title", body="test body", properties=properties)
     assert page.properties == {
         "title": [{"type": "text", "text": {"content": "test title"}}],
-        "qyqF": {
+        "Size": {
             "id": "59a6cc39-cbe3-4cac-a013-6928a3b0705b",
             "name": "small",
             "color": "pink",
@@ -107,13 +119,13 @@ def test_notion_page_with_properties_empty():
     page.update_properties(properties=properties)
     assert page.properties == {
         "title": [{"type": "text", "text": {"content": "test title"}}],
-        "k%3A%7Bd": None,
+        "Start Date": None,
     }
 
     page = NotionPage(title="test title", body="test body", properties=properties)
     assert page.properties == {
         "title": [{"type": "text", "text": {"content": "test title"}}],
-        "k%3A%7Bd": None,
+        "Start Date": None,
     }
 
 
@@ -137,13 +149,31 @@ def test_notion_page_cannot_update_title():
     ]
 
 
-# def test_notion_page_with_value():
-#     properties = {
-#         "Start Date": {
-#             "id": "k%3A%7Bd",
-#             "type": "date",
-#             "date": {"start": None, "end": None, "time_zone": None},
-#         }
-#     }
-#     page = NotionPage(title="test", body="test", properties=properties)
-#     pass
+def test_notion_page_update_template_property_with_value_date():
+    properties = {
+        "Start Date": {
+            "id": "k%3A%7Bd",
+            "type": "date",
+            "date": {"start": None, "end": None, "time_zone": None},
+        }
+    }
+    kwargs = {"Start Date": {"start": "2023-02-04", "end": "2023-02-10"}}
+    page = NotionPage(title="test", body="test", properties=properties, **kwargs)
+    assert page.properties["Start Date"] == {
+        "start": "2023-02-04",
+        "end": "2023-02-10",
+        "time_zone": None,
+    }
+
+
+def test_notion_page_update_none_template_property_with_value_date():
+    properties = {
+        "Start Date": {
+            "id": "k%3A%7Bd",
+            "type": "date",
+            "date": None,
+        }
+    }
+    kwargs = {"Start Date": {"start": "2023-02-04", "end": "2023-02-10"}}
+    page = NotionPage(title="test", body="test", properties=properties, **kwargs)
+    assert page.properties["Start Date"] == {"start": "2023-02-04", "end": "2023-02-10"}
