@@ -1,16 +1,9 @@
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 
 def get_first_monday(d):
     """Get first Monday of the month."""
-    day_7 = datetime(d.year, d.month, 7)
-    offset = -day_7.weekday()  # weekday = 0 means monday
-    return day_7 + timedelta(offset)
-
-
-def get_next_monday(d):
-    """Get next Monday from the given date."""
-    day_7 = datetime(d.year, d.month, 7)
+    day_7 = date(d.year, d.month, 7)
     offset = -day_7.weekday()  # weekday = 0 means monday
     return day_7 + timedelta(offset)
 
