@@ -4,6 +4,7 @@ client = NotionClient()
 
 kwargs = {
     "Date": {"start": "2023-02-04", "end": "2023-02-10"},
+    "URL": "https://www.google.com/",
     "replace_rules": [
         {
             "block_types": ["heading_1"],  # target blocks to apply replacement
