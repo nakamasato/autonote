@@ -20,6 +20,7 @@ def test_get_first_monday_mar():
     monday = get_first_monday(d)
     assert date(2023, 3, 6) == monday
 
+
 def test_get_next_weekday():
     d = date(2023, 3, 1)
     monday = get_next_weekday(d, 0)
