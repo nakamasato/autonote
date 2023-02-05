@@ -1,4 +1,4 @@
-from datetime import date ,timedelta
+from datetime import date, timedelta
 from enum import Enum
 
 from jinja2 import Environment, PackageLoader
