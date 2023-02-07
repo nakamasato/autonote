@@ -13,20 +13,98 @@ Currently only support pre-defined page. TODO: make it configurable
     export CONFLUENCE_USERNAME=<yourname>@domain.com
     export CONFLUENCE_PASSWORD=<TOKEN>
     ```
+1. Prepare `templates/monthly_report.html.tpl`
+    ```html
+    <html>
 
+    <head>
+    	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    	<title></title>
+    </head>
+
+    <body>
+    	<article>
+    		<div>
+    			{% for week in weeks %}
+    			<h1>{{ week.start_date }}~{{week.end_date}}</h1>
+    			<ul>
+    				<li></li>
+    			</ul>
+    			{% endfor %}
+    			<h1>KPT</h1>
+    			<ul>
+    				<li>K</li>
+    				<li>P</li>
+    				<li>T</li>
+    			</ul>
+    		</div>
+    	</article>
+    </body>
+
+    </html>
+    ```
 1. Run
     ```python
-    from autonote.confluence import ConfluenceClient
-    from autonote.html import generate
+    from os import path, environ
+    from datetime import date, timedelta
 
-    content = generate()
+    from jinja2 import Environment, FileSystemLoader
+
+    from autonote.confluence import ConfluenceClient
+
+
+    data = {
+        "weeks": [
+            {
+                "start_date": "2023/02/06",
+                "end_date": "2023/02/10",
+            },
+            {
+                "start_date": "2023/02/20",
+                "end_date": "2023/02/24",
+            },
+            {
+                "start_date": "2023/02/07",
+                "end_date": "2023/03/03",
+            },
+        ]
+    }
+    env = Environment(loader=FileSystemLoader(path.dirname(__file__)))
+    template = env.get_template("templates/monthly_report.html.tpl")
+    content = template.render(data)
     client = ConfluenceClient()
     client.create_page(
-        parent_page_id="<confluence_parent_page_id>",
-        title="title",
+        parent_page_id=environ["CONFLUENCE_PARENT_PAGE_ID"],
+        title=f"2023/02/07 Feb test",
         body=content,
     )
     ```
+
+    <details><summary>generate data with code</summary>
+
+    ```python
+    def prepare_data():
+        date_format = "%Y/%m/%d"
+        d = date.today()
+        monday = date(2023, 2, 6)
+        first_day_of_next_month = (d.replace(day=1) + timedelta(days=32)).replace(day=1)
+        weeks = []
+        while monday < first_day_of_next_month:
+            friday = monday + timedelta(days=4)
+            weeks.append(
+                {
+                    "start_date": monday.strftime(date_format),
+                    "end_date": friday.strftime(date_format),
+                }
+            )
+            monday += timedelta(weeks=1)
+
+        return {
+            "weeks": weeks,
+        }
+    ```
+
+    </details>
 
     Generated Page:
 
