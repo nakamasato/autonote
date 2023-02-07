@@ -181,6 +181,25 @@ def test_notion_page_update_none_template_property_with_value_date():
     assert page.properties["Start Date"] == {"start": "2023-02-04", "end": "2023-02-10"}
 
 
+def test_notion_page_update_none_template_property_with_value_url():
+    properties = {
+        "Start Date": {
+            "id": "k%3A%7Bd",
+            "type": "date",
+            "date": None,
+        },
+        "URL": {"id": "TR%5C%5B", "type": "url", "url": None},
+    }
+    kwargs = {
+        "Start Date": {"start": "2023-02-04", "end": "2023-02-10"},
+        "URL": "https://www.google.com/",
+    }
+    page = NotionPage(
+        title="test", parent_type="page_id", properties=properties, **kwargs
+    )
+    assert page.properties["URL"] == "https://www.google.com/"
+
+
 def test_notion_page_update_template_property_with_nonexisting_value():
     kwargs = {"nonexisting key": {"start": "2023-02-04", "end": "2023-02-10"}}
     page = NotionPage(title="test title", parent_type="page_id", **kwargs)

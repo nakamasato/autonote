@@ -15,8 +15,18 @@ Automate creating daily, weekly, monthly, and quarterly manual repetitive docume
 
 ## Prerequisite
 
-1. Confluence API Token
-1. Notion Integration Token
+1. [Confluence API Token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/)
+
+    ```
+    export CONFLUENCE_URL=https://xxx.atlassian.net
+    export CONFLUENCE_USERNAME=<yourname>@domain.com
+    export CONFLUENCE_PASSWORD=<TOKEN>
+    ```
+1. [Notion Integration Token](https://developers.notion.com/docs/authorization)
+
+    ```
+    export NOTION_INTEGRATION_TOKEN=xxx
+    ```
 
 ## Installation
 

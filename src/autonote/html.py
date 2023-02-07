@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import date, timedelta
 from enum import Enum
 
 from jinja2 import Environment, PackageLoader
@@ -10,7 +10,7 @@ Period = Enum("Period", ["QUARTERLY", "MONTHLY", "WEEKLY", "DAILY"])
 
 def generate(d=None, date_format="%Y/%m/%d"):
     if d is None:
-        d = datetime.today()
+        d = date.today()
     monday = get_first_monday(d)
     first_day_of_next_month = (d.replace(day=1) + timedelta(days=32)).replace(day=1)
     weeks = []
