@@ -58,12 +58,11 @@ Ready to contribute? Here's how to set up `autonote` for local development.
 4. When you're done making changes, check that your changes conform to any code formatting requirements and pass any tests.
 
     1. Test example scripts.
-      ```
-      poetry self add poetry-dotenv-plugin
-      ```
+        ```
+        poetry self add poetry-dotenv-plugin
+        ```
 
     1. Prepare `.env` file. (Will actually create a Confluence page)
-
         ```
         poetry run python examples/create_confluence_page.py
         ```
