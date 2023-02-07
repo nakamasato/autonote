@@ -27,6 +27,8 @@ Automate creating daily, weekly, monthly, and quarterly manual repetitive docume
     ```
     export NOTION_INTEGRATION_TOKEN=xxx
     ```
+    
+    Please do not forget to [share the target database/page with your integration](https://developers.notion.com/docs/create-a-notion-integration#step-2-share-a-database-with-your-integration)
 
 ## Installation
 
@@ -34,56 +36,59 @@ Automate creating daily, weekly, monthly, and quarterly manual repetitive docume
 pip install autonote
 ```
 
-## Usage (Notion)
+## Usage Example (Notion: Create a page from a template.)
 
-```python
-from autonote.notion import NotionClient
+1. Create a template page.
 
-client = NotionClient()
+    <table><tr><td>
+    <img src="docs/notion_template_page_1.png" width="200px" />
+    </td></tr></table>
 
-kwargs = {
-    "Date": {"start": "2023-02-04", "end": "2023-02-10"},
-    "replace_rules": [
-        {
-            "block_types": ["heading_1"],  # target blocks to apply replacement
-            "replace_str": "YYYY/MM/DD",  # replacement string match
-            "replace_type": "datetime",  # currently only support "datetime"
-            "date_format": "%Y/%m/%d",  # used to parse `start_date` and generate string from datetime when interpolating
-            "start_date": "2023/02/04",  # start date
-            "increment": True,  # if true, increment 1 day every time replacement is executed
-        },
-    ],
-}
-client.create_page_from_template(
-    template_id="a7cc4f73460c4b9fa82be8d4ed74d8ca",
-    title="weekly note",
-    override=True,
-    **kwargs
-)
-```
+1. Prepare Python script.
 
-Template:
+    ```python
+    from autonote.notion import NotionClient
 
-<table><tr><td>
-<img src="docs/notion_template_page_1.png" width="200px" />
-</td></tr></table>
+    client = NotionClient()
 
-Generated page:
+    kwargs = {
+        "Date": {"start": "2023-02-04", "end": "2023-02-10"},
+        "replace_rules": [
+            {
+                "block_types": ["heading_1"],  # target blocks to apply replacement
+                "replace_str": "YYYY/MM/DD",  # replacement string match
+                "replace_type": "datetime",  # currently only support "datetime"
+                "date_format": "%Y/%m/%d",  # used to parse `start_date` and generate string from datetime when interpolating
+                "start_date": "2023/02/04",  # start date
+                "increment": True,  # if true, increment 1 day every time replacement is executed
+            },
+        ],
+    }
+    client.create_page_from_template(
+        template_id="a7cc4f73460c4b9fa82be8d4ed74d8ca",
+        title="weekly note",
+        override=True,
+        **kwargs
+    )
+    ```
 
-<table><tr><td>
-<img src="docs/notion_page_3.png" width="200px" />
-</td></tr></table>
+1. Run the script.
+    ```
+    pip install autonote
+    python main.py
+    ```
+
+    Generated page:
+    <table><tr><td>
+    <img src="docs/notion_page_3.png" width="200px" />
+    </td></tr></table>
 
 
-For more examples, please check [Examples](examples/README.md).
+For more examples, please check [examples](examples/README.md).
 
 ## Credits
 
 `autonote` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
-
-## Contributing
-
-Interested in contributing? Check out the contributing guidelines. Please note that this project is released with a Code of Conduct. By contributing to this project, you agree to abide by its terms.
 
 ## License
 
