@@ -223,6 +223,10 @@ client.create_page_from_template(
 <img src="../docs/notion_page_2.png" width="200px" />
 </td></tr></table>
 
+```
+poetry run python examples/create_notion_page_from_template.py
+```
+
 ## 2.4. Create Notion page from a templae with dynamic values (content)
 
 ```python
@@ -262,3 +266,7 @@ Generated page:
 <table><tr><td>
 <img src="../docs/notion_page_3.png" width="200px" />
 </td></tr></table>
+
+```bash
+poetry run python examples/create_notion_page_from_template_with_value.py # start date & end date inserted
+```
