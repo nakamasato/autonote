@@ -67,11 +67,12 @@ class NotionPage:
             # skip title
             if v["type"] == "title":
                 continue
-            elif v["type"] in {
+            elif v["type"] in { # uneditable
                 "created_by",
                 "last_edited_by",
                 "last_edited_time",
                 "created_time",
+                "formula",
             }:
                 continue
             else:
