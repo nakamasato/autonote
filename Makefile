@@ -20,3 +20,9 @@ docs:
 .PHONY: install
 install:
 	poetry install
+
+.PHONY: notion-e2e
+install:
+	poetry run python examples/create_notion_page.py
+	poetry run python examples/create_notion_page_from_template_with_value.py
+	poetry run python examples/create_notion_page_from_template.py
