@@ -1,4 +1,4 @@
-name: release
+name: release # you cannot change this workflow name as it's used for trusted publisher
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     environment:
       name: pypi
-      url: https://pypi.org/p/<your-pypi-project-name>
+      url: https://pypi.org/p/autonote
     permissions:
       id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
     runs-on: ubuntu-latest
