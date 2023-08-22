@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  releaase:
+  release:
     if: github.ref == 'refs/heads/main'
     environment:
       name: pypi
