@@ -69,6 +69,11 @@ Ready to contribute? Here's how to set up `autonote` for local development.
 
 5. Commit your changes and open a pull request.
 
+## Release
+
+Release is done by GitHub Actions `release.yml`, which publishes the latest version to test.pypi.org and pypi.org using
+a [trusted publisher](https://docs.pypi.org/trusted-publishers/adding-a-publisher/)
+
 ## Pull Request Guidelines
 
 Before you submit a pull request, check that it meets these guidelines:
