@@ -31,7 +31,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.semantic_release]
 version_variables = ["pyproject.toml:version"] # version location
-build_command = "poetry build"              # build dists
+build_command = "pip install poetry && poetry build" # build dists
 dist_path = "dist/"                         # where to put dists
 remove_dist = false                         # don't remove dists
 assets = []
