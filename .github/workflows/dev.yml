@@ -2,6 +2,11 @@ name: dev
 
 on:
   pull_request:
+    paths:
+      - .github/workflows/dev.yml
+      - '**.py'
+      - poetry.lock
+      - pyporject.toml
   push:
     branches:
       - main
