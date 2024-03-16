@@ -14,13 +14,13 @@ jobs:
       contents: write  # to create GitHub Releases
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Python
-        uses: actions/setup-python@v5
-
       - name: Check-out repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
         with:
           fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
 
       - name: Load cached Poetry installation
         id: cached-poetry
