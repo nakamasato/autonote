@@ -4,5 +4,11 @@
     "config:base"
   ],
   "automerge": true,
-  "automergeStrategy": "squash"
+  "automergeStrategy": "squash",
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "ignorePaths": [
+    ".tool-versions"
+  ]
 }
