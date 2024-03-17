@@ -44,7 +44,7 @@ tag_format = "v{version}"
 [tool.semantic_release.branches.main]
 match = "(main|master|release)"
 prerelease_token = "rc"
-prerelease = true
+prerelease = false
 
 [tool.semantic_release.changelog]
 template_dir = "templates"
@@ -78,9 +78,6 @@ patch_tags = ["fix", "perf"]
 name = "origin"
 type = "github"
 ignore_token_for_push = false
-
-[tool.semantic_release.remote.token]
-env = "GH_TOKEN"
 
 [tool.semantic_release.publish]
 dist_glob_patterns = ["dist/*"]
