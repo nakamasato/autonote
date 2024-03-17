@@ -2,9 +2,17 @@
 
 
 
-## v0.5.1 (2024-03-17)
+## v0.5.3 (2024-03-17)
 
 ### Chore
+
+* chore: use ruff (#147) ([`43c88af`](https://github.com/nakamasato/autonote/commit/43c88af7088bfc65885aebc3e7b690521768d576))
+
+* chore: fix (#145) ([`0e7ab1e`](https://github.com/nakamasato/autonote/commit/0e7ab1ecb986e6421b5ef447e7af0c22cd8f8213))
+
+* chore: update changelog (#144)
+
+Co-authored-by: semantic-release &lt;semantic-release&gt; ([`412848a`](https://github.com/nakamasato/autonote/commit/412848a24cde18f68c61dc0c6e4eab5893132cdf))
 
 * chore: update release process (#143) ([`fb4219e`](https://github.com/nakamasato/autonote/commit/fb4219e6d1207fb5acab49f458f03487a412bca6))
 

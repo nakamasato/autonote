@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "autonote"
-version = "0.5.1"
+version = "0.5.3"
 description = "Automate taking notes"
 authors = ["Masato Naka"]
 license = "MIT"
@@ -29,7 +29,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.semantic_release]
 version_variables = ["pyproject.toml:version"] # version location
-build_command = "pip install poetry && poetry build" # build dists
+build_command = "poetry build" # build dists
 dist_path = "dist/"                         # where to put dists
 remove_dist = false                         # don't remove dists
 assets = []
@@ -42,7 +42,7 @@ tag_format = "v{version}"
 [tool.semantic_release.branches.main]
 match = "(main|master|release)"
 prerelease_token = "rc"
-prerelease = false
+prerelease = true
 
 [tool.semantic_release.changelog]
 template_dir = "templates"
