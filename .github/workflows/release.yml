@@ -73,7 +73,7 @@ jobs:
             pip install \
             --index-url https://test.pypi.org/simple/ \
             --extra-index-url https://pypi.org/simple \
-            autonote
+            autonote==$(poetry version --short)
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
