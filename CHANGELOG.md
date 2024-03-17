@@ -2,9 +2,19 @@
 
 
 
-## v0.5.1-rc.1 (2024-03-17)
+## v0.5.1 (2024-03-17)
 
 ### Chore
+
+* chore: update release process (#143) ([`fb4219e`](https://github.com/nakamasato/autonote/commit/fb4219e6d1207fb5acab49f458f03487a412bca6))
+
+* chore: skip to publish testpypi (#142) ([`3b97f89`](https://github.com/nakamasato/autonote/commit/3b97f899db42d30f642335aa35a9c53436bde925))
+
+* chore: fix (#141) ([`582049d`](https://github.com/nakamasato/autonote/commit/582049d3798455eaef99a2212074efe1d04e1f72))
+
+* chore: fix skip-existing (#140) ([`864e19f`](https://github.com/nakamasato/autonote/commit/864e19f4fa8f2aedd9252769534dc6e0d8340e4b))
+
+* chore: update release process (#139) ([`f599e70`](https://github.com/nakamasato/autonote/commit/f599e70e3811e68adf6624eb62cb7fe989099069))
 
 * chore: fix permission of github actions (#136) ([`e1959ad`](https://github.com/nakamasato/autonote/commit/e1959ad087b9e0df8060e009e30df5422fa0b512))
 
@@ -179,6 +189,10 @@ Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.co
 Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`153d813`](https://github.com/nakamasato/autonote/commit/153d813a16dda83f4c77d5dd869a2b9549c9c07e))
 
 ### Unknown
+
+* Changes by create-pull-request action (#137)
+
+Co-authored-by: semantic-release &lt;semantic-release&gt; ([`5472ee2`](https://github.com/nakamasato/autonote/commit/5472ee278cbe63cf8174eeec7dc4ed552a101b29))
 
 * Update semantic-pull-request.yml ([`1283e92`](https://github.com/nakamasato/autonote/commit/1283e92aeba0fb49c4d8d190c41906a49baa8f5d))
 
