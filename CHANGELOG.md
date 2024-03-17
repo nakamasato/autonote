@@ -2,9 +2,17 @@
 
 
 
-## v0.5.1 (2024-03-17)
+## v0.5.1-rc.1 (2024-03-17)
 
 ### Chore
+
+* chore: update ci (#126) ([`67b77aa`](https://github.com/nakamasato/autonote/commit/67b77aa0ca4f180efa1387939171869a2dff2c06))
+
+* chore: enable prerelease (#125) ([`d18d07e`](https://github.com/nakamasato/autonote/commit/d18d07e55d9cef33dfc26c788d52d334decd5141))
+
+* chore: upgrade dependencies (#124) ([`15794b8`](https://github.com/nakamasato/autonote/commit/15794b88a468965a9d8b185e75303b24af931a66))
+
+* chore: update renovate.json (#123) ([`1219ce4`](https://github.com/nakamasato/autonote/commit/1219ce450ca12b09300d64739567570301d52cc9))
 
 * chore: specify semantic-release 8.3.0 (#120) ([`771fda1`](https://github.com/nakamasato/autonote/commit/771fda1e6f891f14eb6f3d121957025df52b868e))
 
