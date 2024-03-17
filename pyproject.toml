@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "autonote"
-version = "0.5.4"
+version = "0.5.1"
 description = "Automate taking notes"
 authors = ["Masato Naka"]
 license = "MIT"
@@ -44,7 +44,7 @@ tag_format = "v{version}"
 [tool.semantic_release.branches.main]
 match = "(main|master|release)"
 prerelease_token = "rc"
-prerelease = true
+prerelease = false
 
 [tool.semantic_release.changelog]
 template_dir = "templates"
