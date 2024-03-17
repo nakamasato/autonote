@@ -16,9 +16,4 @@ kwargs = {
         },
     ],
 }
-client.create_page_from_template(
-    template_id="a7cc4f73460c4b9fa82be8d4ed74d8ca",
-    title="weekly note",
-    override=True,
-    **kwargs
-)
+client.create_page_from_template(template_id="a7cc4f73460c4b9fa82be8d4ed74d8ca", title="weekly note", override=True, **kwargs)

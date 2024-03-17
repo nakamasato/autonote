@@ -28,9 +28,7 @@ class ConfluenceClient:
         If there already exists a page with the given title,
         update the existing page.
         """
-        status = self.confluence.update_or_create(
-            parent_page_id, title, body, editor="v2"
-        )
+        status = self.confluence.update_or_create(parent_page_id, title, body, editor="v2")
         confluence_space_key = status["space"]["key"]
         print(f"create page -> key: {confluence_space_key} id: {status['id']}")
         return {"id": status["id"]}
