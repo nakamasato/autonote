@@ -21,16 +21,6 @@
         "python-semantic-release/python-semantic-release"
       ],
       "automerge": false
-    },
-    {
-      "groupName": "GitHub Actions",
-      "matchManagers": [
-        "github-actions"
-      ],
-      "matchPackageNames": [
-        "python-semantic-release/python-semantic-release"
-      ],
-      "automerge": false
     }
   ]
 }
