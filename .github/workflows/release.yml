@@ -7,8 +7,10 @@ on:
       - main
 
 jobs:
-
   prerelease:
+    environment:
+      name: pypi
+      url: https://pypi.org/p/autonote
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     concurrency: prerelease
