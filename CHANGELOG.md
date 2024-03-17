@@ -6,6 +6,10 @@
 
 ### Chore
 
+* chore: prerelease new version 0.5.4-rc.1 (#150)
+
+Co-authored-by: semantic-release &lt;semantic-release&gt; ([`d7c41b5`](https://github.com/nakamasato/autonote/commit/d7c41b5618a93b9a0b00ec7ce1ad56e5f75b1e0a))
+
 * chore: test release (#149)
 
 Co-authored-by: semantic-release &lt;semantic-release&gt; ([`7bf8850`](https://github.com/nakamasato/autonote/commit/7bf88509258b267a9f50fb3d25dbe795ce6ce4ca))
