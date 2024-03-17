@@ -180,6 +180,10 @@ Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.co
 
 ### Unknown
 
+* Changes by create-pull-request action (#137)
+
+Co-authored-by: semantic-release &lt;semantic-release&gt; ([`5472ee2`](https://github.com/nakamasato/autonote/commit/5472ee278cbe63cf8174eeec7dc4ed552a101b29))
+
 * Update semantic-pull-request.yml ([`1283e92`](https://github.com/nakamasato/autonote/commit/1283e92aeba0fb49c4d8d190c41906a49baa8f5d))
 
 
