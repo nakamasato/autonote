@@ -44,7 +44,7 @@ tag_format = "v{version}"
 [tool.semantic_release.branches.main]
 match = "(main|master)"
 prerelease_token = "rc"
-prerelease = false
+prerelease = true
 
 [tool.semantic_release.changelog]
 template_dir = "templates"
