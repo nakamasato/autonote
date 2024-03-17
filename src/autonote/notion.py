@@ -14,9 +14,7 @@ class NotionMock:
 class NotionPage:
     """NotionPage contains parent and properties"""
 
-    def __init__(
-        self, title: str, parent_type: str, properties: dict = None, **kwargs
-    ) -> None:
+    def __init__(self, title: str, parent_type: str, properties: dict = None, **kwargs) -> None:
         """Initialize NotionPage.
 
         Args:
@@ -87,9 +85,7 @@ class NotionPage:
                     self.properties[k] = v
                 else:
                     self.properties[k].update(v)
-                print(
-                    f"update property with value ({v}). new: {k}: {self.properties[k]}"
-                )
+                print(f"update property with value ({v}). new: {k}: {self.properties[k]}")
             else:
                 print(f"{k} is not in properties")
 
@@ -100,9 +96,7 @@ class NotionPageContent:
             {
                 "object": "block",
                 "type": "heading_2",
-                "heading_2": {
-                    "rich_text": [{"type": "text", "text": {"content": body}}]
-                },
+                "heading_2": {"rich_text": [{"type": "text", "text": {"content": body}}]},
             },
         ]
         if contents is not None:
@@ -136,9 +130,7 @@ class NotionPageContent:
             if replace_type == "datetime":
                 self.update_contents_by_datetime(**rule)
 
-    def update_contents_by_datetime(
-        self, block_types, replace_str, date_format, start_date, increment=False
-    ):
+    def update_contents_by_datetime(self, block_types, replace_str, date_format, start_date, increment=False):
         """Update contents with specified start_date
         Args:
             block_types (list): block types e.g. ["heading_1", "heading_2"]
@@ -160,22 +152,16 @@ class NotionPageContent:
                 continue
             if blk["type"] in block_types:
                 str_before = blk[blk["type"]]["rich_text"][0]["plain_text"]
-                blk[blk["type"]]["rich_text"][0]["text"]["content"] = blk[blk["type"]][
-                    "rich_text"
-                ][0]["text"]["content"].replace(
+                blk[blk["type"]]["rich_text"][0]["text"]["content"] = blk[blk["type"]]["rich_text"][0]["text"]["content"].replace(
                     replace_str,
                     dt.strftime(date_format),
                 )
-                blk[blk["type"]]["rich_text"][0]["plain_text"] = blk[blk["type"]][
-                    "rich_text"
-                ][0]["plain_text"].replace(
+                blk[blk["type"]]["rich_text"][0]["plain_text"] = blk[blk["type"]]["rich_text"][0]["plain_text"].replace(
                     replace_str,
                     dt.strftime(date_format),
                 )
                 str_after = blk[blk["type"]]["rich_text"][0]["plain_text"]
-                print(
-                    f"updating contents type: {blk['type']}, {str_before=}, {str_after=}"
-                )
+                print(f"updating contents type: {blk['type']}, {str_before=}, {str_after=}")
                 if increment is True:
                     dt += timedelta(days=1)
 
@@ -216,9 +202,7 @@ class NotionClient:
         # Prepare NotionPage and NotionPageContent from template
         tpl = self.get_page(page_id=template_id)
         if tpl["parent"]["type"] != "database_id":
-            raise ValueError(
-                "The given template_id {template_id} is not a database template."
-            )
+            raise ValueError("The given template_id {template_id} is not a database template.")
         database_id = tpl["parent"]["database_id"]
         pages_kwargs = NotionPage(  # only properties
             title=title,
@@ -243,9 +227,7 @@ class NotionClient:
         else:
             page_id = res["results"][0]["id"]
             print(f"page with title '{title}' already exists (id: {page_id})")
-            res = self.client.pages.update(
-                page_id, **pages_kwargs
-            )  # only update properties
+            res = self.client.pages.update(page_id, **pages_kwargs)  # only update properties
 
         # update contents
         self.update_contents(page_id=page_id, contents=content.contents)

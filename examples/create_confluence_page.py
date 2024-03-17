@@ -1,4 +1,3 @@
-from datetime import date, timedelta
 from os import environ, path
 
 from jinja2 import Environment, FileSystemLoader
@@ -27,6 +26,6 @@ content = template.render(data)
 client = ConfluenceClient()
 client.create_page(
     parent_page_id=environ["CONFLUENCE_PARENT_PAGE_ID"],
-    title=f"2023/02/07 Feb test",
+    title="2023/02/07 Feb test",
     body=content,
 )

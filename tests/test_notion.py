@@ -137,14 +137,10 @@ def test_notion_page_cannot_update_title():
     }
     page = NotionPage(title="test title", parent_type="page_id")
     page.update_properties(properties=properties)
-    assert page.properties["title"] == [
-        {"type": "text", "text": {"content": "test title"}}
-    ]
+    assert page.properties["title"] == [{"type": "text", "text": {"content": "test title"}}]
 
     page = NotionPage(title="test title", parent_type="page_id", properties=properties)
-    assert page.properties["title"] == [
-        {"type": "text", "text": {"content": "test title"}}
-    ]
+    assert page.properties["title"] == [{"type": "text", "text": {"content": "test title"}}]
 
 
 def test_notion_page_update_template_property_with_value_date():
@@ -156,9 +152,7 @@ def test_notion_page_update_template_property_with_value_date():
         }
     }
     kwargs = {"Start Date": {"start": "2023-02-04", "end": "2023-02-10"}}
-    page = NotionPage(
-        title="test", parent_type="page_id", properties=properties, **kwargs
-    )
+    page = NotionPage(title="test", parent_type="page_id", properties=properties, **kwargs)
     assert page.properties["Start Date"] == {
         "start": "2023-02-04",
         "end": "2023-02-10",
@@ -175,9 +169,7 @@ def test_notion_page_update_none_template_property_with_value_date():
         }
     }
     kwargs = {"Start Date": {"start": "2023-02-04", "end": "2023-02-10"}}
-    page = NotionPage(
-        title="test", parent_type="page_id", properties=properties, **kwargs
-    )
+    page = NotionPage(title="test", parent_type="page_id", properties=properties, **kwargs)
     assert page.properties["Start Date"] == {"start": "2023-02-04", "end": "2023-02-10"}
 
 
@@ -194,9 +186,7 @@ def test_notion_page_update_none_template_property_with_value_url():
         "Start Date": {"start": "2023-02-04", "end": "2023-02-10"},
         "URL": "https://www.google.com/",
     }
-    page = NotionPage(
-        title="test", parent_type="page_id", properties=properties, **kwargs
-    )
+    page = NotionPage(title="test", parent_type="page_id", properties=properties, **kwargs)
     assert page.properties["URL"] == "https://www.google.com/"
 
 
@@ -296,11 +286,5 @@ def test_notion_page_content_update_contents_replace_datetime():
         }
     ]
     content = NotionPageContent("body", contents=contents, replace_rules=replace_rules)
-    assert (
-        content.contents[2]["heading_1"]["rich_text"][0]["text"]["content"]
-        == "2023-01-01 (月)"
-    )
-    assert (
-        content.contents[2]["heading_1"]["rich_text"][0]["plain_text"]
-        == "2023-01-01 (月)"
-    )
+    assert content.contents[2]["heading_1"]["rich_text"][0]["text"]["content"] == "2023-01-01 (月)"
+    assert content.contents[2]["heading_1"]["rich_text"][0]["plain_text"] == "2023-01-01 (月)"
