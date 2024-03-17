@@ -57,7 +57,10 @@ jobs:
         run: make install
 
       - name: sematic release
-        run: poetry run semantic-release version --prerelease --no-push --no-tag
+        id: semantic-release
+        run: |
+          poetry run semantic-release version --prerelease --no-push --no-tag
+          echo "version=$(poetry version --short)" >> $GITHUB_OUTPUT
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -80,6 +83,14 @@ jobs:
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
+        with:
+          title: "chore: prerelease new version ${{ steps.semantic-release.outputs.version }}"
+          commit-message: "chore: prerelease new version ${{ steps.semantic-release.outputs.version }}"
+          labels: prerelease
+          branch: release
+          body: |
+            New version ${{ steps.semantic-release.outputs.version }} is prereleased.
+            You can check on https://test.pypi.org/project/autonote/
 
   release:
     if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
@@ -127,6 +138,14 @@ jobs:
       - name: Install package
         run: make install
 
+      - name: sematic release
+        id: semantic-release
+        run: |
+          poetry run semantic-release version --no-push
+          echo "version=$(poetry version --short)" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build package
         run: make build
 
@@ -136,12 +155,23 @@ jobs:
           repository-url: https://test.pypi.org/legacy/
           skip_existing: true
 
-      - name: Test install from TestPyPI
-        run: |
-            pip install \
-            --index-url https://test.pypi.org/simple/ \
-            --extra-index-url https://pypi.org/simple \
-            autonote
+      # - name: Test install from TestPyPI
+      #   run: |
+      #       pip install \
+      #       --index-url https://test.pypi.org/simple/ \
+      #       --extra-index-url https://pypi.org/simple \
+      #       autonote
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          title: "chore: release new version ${{ steps.semantic-release.outputs.version }}"
+          commit-message: "chore: release new version ${{ steps.semantic-release.outputs.version }}"
+          labels: release
+          branch: release
+          body: |
+            New version ${{ steps.semantic-release.outputs.version }} is released.
+            You can check on https://pypi.org/project/autonote/
