@@ -52,7 +52,7 @@ jobs:
         run: make install
 
       - name: Python Semantic Release
-        uses: python-semantic-release/python-semantic-release@master
+        uses: python-semantic-release/python-semantic-release@v8.3.0 # fix this version to use Python version 3.12
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
