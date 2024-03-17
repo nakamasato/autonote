@@ -6,9 +6,21 @@
 
 ### Chore
 
-* chore: fix ci ([`b71bc19`](https://github.com/nakamasato/autonote/commit/b71bc1911cac9776911a20de2839053c7acab4cd))
+* chore: fix permission of github actions (#136) ([`e1959ad`](https://github.com/nakamasato/autonote/commit/e1959ad087b9e0df8060e009e30df5422fa0b512))
 
-* chore: update ci ([`53fb9c6`](https://github.com/nakamasato/autonote/commit/53fb9c625d1a37abcd0ca534589b8624098dc2c5))
+* chore: fix python version (#135) ([`fb8193c`](https://github.com/nakamasato/autonote/commit/fb8193c99a93f0b5afce896226e44f8d85592900))
+
+* chore: skip existing (#134) ([`36df1c0`](https://github.com/nakamasato/autonote/commit/36df1c0706c52ba0d7bfe234e809933cd74e0608))
+
+* chore: skip existing true (#133) ([`f683ebc`](https://github.com/nakamasato/autonote/commit/f683ebc9e1e42181e8158168fda0025a20f273e9))
+
+* chore: update command to install test pypi (#132) ([`00d1765`](https://github.com/nakamasato/autonote/commit/00d1765071edb486864fa245faab4639535dcd80))
+
+* chore: add environment for release job (#131) ([`5c6c14c`](https://github.com/nakamasato/autonote/commit/5c6c14c42f1197c7494d049b3ee5dc873fe7d840))
+
+* chore: update ci (#130)
+
+Co-authored-by: semantic-release &lt;semantic-release&gt; ([`10cd2b3`](https://github.com/nakamasato/autonote/commit/10cd2b3d5cf3c840e0a6f7e5c7676d9a27811ce1))
 
 * chore: update ci (#128) ([`b1faf1e`](https://github.com/nakamasato/autonote/commit/b1faf1ef74a55301ece099b50fd5d0f01802ed2b))
 
@@ -167,22 +179,6 @@ Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.co
 Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`153d813`](https://github.com/nakamasato/autonote/commit/153d813a16dda83f4c77d5dd869a2b9549c9c07e))
 
 ### Unknown
-
-* fix ([`e4f5f9b`](https://github.com/nakamasato/autonote/commit/e4f5f9be85799409fa1479febbf4f97e73d7ee11))
-
-* fix ([`713627b`](https://github.com/nakamasato/autonote/commit/713627b1148a5b4e64a9dd5cc131a58228df8f5b))
-
-* update ([`662575f`](https://github.com/nakamasato/autonote/commit/662575f7f67521c40a25cf058def8172172f0f0d))
-
-* update ([`77ee1cd`](https://github.com/nakamasato/autonote/commit/77ee1cd75342450166394413b93b716a383377ba))
-
-* fix ([`b506c21`](https://github.com/nakamasato/autonote/commit/b506c21f79fd019d42e9fd78680c3db53e44d5a6))
-
-* fix ([`00394ad`](https://github.com/nakamasato/autonote/commit/00394ad1944827ea982b56213e2887e7419316e1))
-
-* fix ([`02db037`](https://github.com/nakamasato/autonote/commit/02db0377c2364565da6aeb3dad82f2d77420d61f))
-
-* update ([`9f1beb3`](https://github.com/nakamasato/autonote/commit/9f1beb3a6dfade0310621fa5c6ae2691b81f277b))
 
 * Update semantic-pull-request.yml ([`1283e92`](https://github.com/nakamasato/autonote/commit/1283e92aeba0fb49c4d8d190c41906a49baa8f5d))
 
