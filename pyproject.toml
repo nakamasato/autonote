@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "autonote"
-version = "0.5.1-rc.1"
+version = "0.5.2"
 description = "Automate taking notes"
 authors = ["Masato Naka"]
 license = "MIT"
@@ -78,9 +78,6 @@ patch_tags = ["fix", "perf"]
 name = "origin"
 type = "github"
 ignore_token_for_push = false
-
-[tool.semantic_release.remote.token]
-env = "GH_TOKEN"
 
 [tool.semantic_release.publish]
 dist_glob_patterns = ["dist/*"]

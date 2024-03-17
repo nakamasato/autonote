@@ -2,7 +2,28 @@
 
 
 
-## v0.5.1-rc.1 (2024-03-17)
+## v0.5.2 (2024-03-17)
+
+### Chore
+
+* chore: fix ci ([`b71bc19`](https://github.com/nakamasato/autonote/commit/b71bc1911cac9776911a20de2839053c7acab4cd))
+
+* chore: update ci ([`53fb9c6`](https://github.com/nakamasato/autonote/commit/53fb9c625d1a37abcd0ca534589b8624098dc2c5))
+
+* chore: update ci (#128) ([`b1faf1e`](https://github.com/nakamasato/autonote/commit/b1faf1ef74a55301ece099b50fd5d0f01802ed2b))
+
+* chore: update release flow (#127) ([`c38f3b6`](https://github.com/nakamasato/autonote/commit/c38f3b6f0aff36089a9774464b9b3e84e1398df7))
+
+### Unknown
+
+* fix ([`00394ad`](https://github.com/nakamasato/autonote/commit/00394ad1944827ea982b56213e2887e7419316e1))
+
+* fix ([`02db037`](https://github.com/nakamasato/autonote/commit/02db0377c2364565da6aeb3dad82f2d77420d61f))
+
+* update ([`9f1beb3`](https://github.com/nakamasato/autonote/commit/9f1beb3a6dfade0310621fa5c6ae2691b81f277b))
+
+
+## v0.5.1-rc.1 (2024-03-16)
 
 ### Chore
 
