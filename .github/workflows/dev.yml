@@ -15,6 +15,9 @@ jobs:
   ci:
     # Set up operating system
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.10, 3.11, 3.12]
 
     # Define job steps
     steps:
@@ -25,7 +28,7 @@ jobs:
         id: setup-python
         uses: actions/setup-python@v5
         with:
-          python-version-file: .python-version
+          python-version: ${{ matrix.python-version }}
 
       - name: Load cached Poetry installation
         id: cached-poetry
@@ -70,6 +73,7 @@ jobs:
         run: make build
 
       - name: Run against Notion demo page
+        if: matrix.python-version == '3.12' # only run on the latest Python version
         env:
           NOTION_INTEGRATION_TOKEN: ${{ secrets.NOTION_INTEGRATION_TOKEN }}
         run: make e2e-notion
