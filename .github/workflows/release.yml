@@ -88,6 +88,8 @@ jobs:
           commit-message: "chore: prerelease new version ${{ steps.semantic-release.outputs.version }}"
           labels: prerelease
           branch: release
+          add-paths: |
+            pyproject.toml
           body: |
             New version ${{ steps.semantic-release.outputs.version }} is prereleased.
             You can check on https://test.pypi.org/project/autonote/
