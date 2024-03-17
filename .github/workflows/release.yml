@@ -17,6 +17,7 @@ jobs:
     permissions:
       id-token: write
       contents: write
+      pull-requests: write
 
     steps:
       - name: Check-out repository
@@ -69,6 +70,7 @@ jobs:
           repository-url: https://test.pypi.org/legacy/
           skip_existing: true
 
+      # TODO: fix
       # - name: Test install from TestPyPI
       #   run: |
       #       pip install \
