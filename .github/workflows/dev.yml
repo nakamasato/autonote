@@ -121,7 +121,7 @@ jobs:
 
       - name: sematic release
         run: poetry run semantic-release version --no-push
-        with:
+        env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build package
