@@ -2,7 +2,7 @@
 
 
 
-## v0.5.1 (2024-03-17)
+## v0.5.1-rc.1 (2024-03-17)
 
 ### Chore
 
@@ -13,19 +13,6 @@
 * chore: update ci (#128) ([`b1faf1e`](https://github.com/nakamasato/autonote/commit/b1faf1ef74a55301ece099b50fd5d0f01802ed2b))
 
 * chore: update release flow (#127) ([`c38f3b6`](https://github.com/nakamasato/autonote/commit/c38f3b6f0aff36089a9774464b9b3e84e1398df7))
-
-### Unknown
-
-* fix ([`00394ad`](https://github.com/nakamasato/autonote/commit/00394ad1944827ea982b56213e2887e7419316e1))
-
-* fix ([`02db037`](https://github.com/nakamasato/autonote/commit/02db0377c2364565da6aeb3dad82f2d77420d61f))
-
-* update ([`9f1beb3`](https://github.com/nakamasato/autonote/commit/9f1beb3a6dfade0310621fa5c6ae2691b81f277b))
-
-
-## v0.5.1-rc.1 (2024-03-16)
-
-### Chore
 
 * chore: update ci (#126) ([`67b77aa`](https://github.com/nakamasato/autonote/commit/67b77aa0ca4f180efa1387939171869a2dff2c06))
 
@@ -180,6 +167,22 @@ Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.co
 Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`153d813`](https://github.com/nakamasato/autonote/commit/153d813a16dda83f4c77d5dd869a2b9549c9c07e))
 
 ### Unknown
+
+* fix ([`e4f5f9b`](https://github.com/nakamasato/autonote/commit/e4f5f9be85799409fa1479febbf4f97e73d7ee11))
+
+* fix ([`713627b`](https://github.com/nakamasato/autonote/commit/713627b1148a5b4e64a9dd5cc131a58228df8f5b))
+
+* update ([`662575f`](https://github.com/nakamasato/autonote/commit/662575f7f67521c40a25cf058def8172172f0f0d))
+
+* update ([`77ee1cd`](https://github.com/nakamasato/autonote/commit/77ee1cd75342450166394413b93b716a383377ba))
+
+* fix ([`b506c21`](https://github.com/nakamasato/autonote/commit/b506c21f79fd019d42e9fd78680c3db53e44d5a6))
+
+* fix ([`00394ad`](https://github.com/nakamasato/autonote/commit/00394ad1944827ea982b56213e2887e7419316e1))
+
+* fix ([`02db037`](https://github.com/nakamasato/autonote/commit/02db0377c2364565da6aeb3dad82f2d77420d61f))
+
+* update ([`9f1beb3`](https://github.com/nakamasato/autonote/commit/9f1beb3a6dfade0310621fa5c6ae2691b81f277b))
 
 * Update semantic-pull-request.yml ([`1283e92`](https://github.com/nakamasato/autonote/commit/1283e92aeba0fb49c4d8d190c41906a49baa8f5d))
 
