@@ -81,7 +81,14 @@ jobs:
       #       --extra-index-url https://pypi.org/simple \
       #       autonote==$(poetry version --short)
 
+      - name: Get changed files in the docs folder
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v43
+        with:
+          files: pyproject.toml
+
       - name: Create Pull Request
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
           title: "chore: prerelease new version ${{ steps.semantic-release.outputs.version }}"
