@@ -2,9 +2,11 @@
 
 
 
-## v0.5.2 (2024-03-17)
+## v0.5.3 (2024-03-17)
 
 ### Chore
+
+* chore: use ruff (#147) ([`43c88af`](https://github.com/nakamasato/autonote/commit/43c88af7088bfc65885aebc3e7b690521768d576))
 
 * chore: fix (#145) ([`0e7ab1e`](https://github.com/nakamasato/autonote/commit/0e7ab1ecb986e6421b5ef447e7af0c22cd8f8213))
 

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "autonote"
-version = "0.5.2"
+version = "0.5.3"
 description = "Automate taking notes"
 authors = ["Masato Naka"]
 license = "MIT"
