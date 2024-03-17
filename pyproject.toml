@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = ">=3.10, <4"
 notion-client = "^2.2.1"
 atlassian-python-api = "^3.41.11"
 
