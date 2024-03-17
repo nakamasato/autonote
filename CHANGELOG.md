@@ -6,6 +6,12 @@
 
 ### Chore
 
+* chore: fix config (#153) ([`37fa6b5`](https://github.com/nakamasato/autonote/commit/37fa6b5c1615a6640971808c2898a4a7bda2c342))
+
+* chore: release new version 0.5.4-rc.1 (#152)
+
+Co-authored-by: semantic-release &lt;semantic-release&gt; ([`0c5f4d7`](https://github.com/nakamasato/autonote/commit/0c5f4d7e0f5bf25f7974994198f1a7ce27b7ca13))
+
 * chore: prerelease new version 0.5.4-rc.1 (#150)
 
 Co-authored-by: semantic-release &lt;semantic-release&gt; ([`d7c41b5`](https://github.com/nakamasato/autonote/commit/d7c41b5618a93b9a0b00ec7ce1ad56e5f75b1e0a))
