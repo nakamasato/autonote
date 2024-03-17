@@ -59,7 +59,7 @@ jobs:
       - name: sematic release
         id: semantic-release
         run: |
-          poetry run semantic-release version --prerelease --no-push --no-tag
+          poetry run semantic-release version --prerelease --no-push --no-tag --build-metadata $(date -u +'%Y%m%d%H%M%S')
           echo "version=$(poetry version --short)" >> $GITHUB_OUTPUT
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -109,6 +109,7 @@ jobs:
     permissions:
       id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
       contents: write  # to create GitHub Releases
+      pull-requests: write # to create pull requests
     runs-on: ubuntu-latest
     steps:
       - name: Check-out repository
