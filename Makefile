@@ -28,3 +28,6 @@ e2e-notion:
 	poetry run python examples/create_notion_page_from_template_with_value.py
 	poetry run python examples/create_notion_page_from_template_with_value_content.py
 
+.PHONY: build
+build:
+	poetry build
