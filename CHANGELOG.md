@@ -2,9 +2,13 @@
 
 
 
-## v0.5.3 (2024-03-17)
+## v0.5.4-rc.1 (2024-03-17)
 
 ### Chore
+
+* chore: test release (#149)
+
+Co-authored-by: semantic-release &lt;semantic-release&gt; ([`7bf8850`](https://github.com/nakamasato/autonote/commit/7bf88509258b267a9f50fb3d25dbe795ce6ce4ca))
 
 * chore: use ruff (#147) ([`43c88af`](https://github.com/nakamasato/autonote/commit/43c88af7088bfc65885aebc3e7b690521768d576))
 
