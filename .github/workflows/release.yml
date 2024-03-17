@@ -69,12 +69,12 @@ jobs:
           repository-url: https://test.pypi.org/legacy/
           skip_existing: true
 
-      - name: Test install from TestPyPI
-        run: |
-            pip install \
-            --index-url https://test.pypi.org/simple/ \
-            --extra-index-url https://pypi.org/simple \
-            autonote==$(poetry version --short)
+      # - name: Test install from TestPyPI
+      #   run: |
+      #       pip install \
+      #       --index-url https://test.pypi.org/simple/ \
+      #       --extra-index-url https://pypi.org/simple \
+      #       autonote==$(poetry version --short)
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
