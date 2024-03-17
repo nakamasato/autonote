@@ -85,7 +85,8 @@ jobs:
         id: changed-files-specific
         uses: tj-actions/changed-files@v43
         with:
-          files: pyproject.toml
+          files: |
+            pyproject.toml
 
       - name: Create Pull Request
         if: steps.changed-files-specific.outputs.any_changed == 'true'
@@ -94,7 +95,7 @@ jobs:
           title: "chore: prerelease new version ${{ steps.semantic-release.outputs.version }}"
           commit-message: "chore: prerelease new version ${{ steps.semantic-release.outputs.version }}"
           labels: prerelease
-          branch: release
+          branch: prerelease
           add-paths: |
             pyproject.toml
           body: |
@@ -116,6 +117,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
         with:
           fetch-depth: 0
+          ref: release
 
       - name: Set up Python
         id: setup-python
@@ -151,7 +153,7 @@ jobs:
       - name: sematic release
         id: semantic-release
         run: |
-          poetry run semantic-release version --no-push
+          poetry run semantic-release version
           echo "version=$(poetry version --short)" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
