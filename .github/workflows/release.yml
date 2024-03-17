@@ -59,7 +59,7 @@ jobs:
       - name: sematic release
         id: semantic-release
         run: |
-          poetry run semantic-release version --prerelease --no-push --no-tag --build-metadata $(date -u +'%Y%m%d%H%M%S')
+          poetry run semantic-release version --prerelease --no-push --no-tag
           echo "version=$(poetry version --short)" >> $GITHUB_OUTPUT
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
