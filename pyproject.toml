@@ -42,7 +42,7 @@ major_on_zero = true
 tag_format = "v{version}"
 
 [tool.semantic_release.branches.main]
-match = "(main|master)"
+match = "(main|master|release)"
 prerelease_token = "rc"
 prerelease = true
 
