@@ -158,11 +158,12 @@ jobs:
       - name: Build package
         run: make build
 
-      - name: Publish to TestPyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          repository-url: https://test.pypi.org/legacy/
-          skip_existing: true
+      # ERROR: This filename has already been used, use a different version.
+      # - name: Publish to TestPyPI
+      #   uses: pypa/gh-action-pypi-publish@release/v1
+      #   with:
+      #     repository-url: https://test.pypi.org/legacy/
+      #     skip_existing: true
 
       # - name: Test install from TestPyPI
       #   run: |
