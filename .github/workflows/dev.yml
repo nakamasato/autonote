@@ -120,7 +120,7 @@ jobs:
         run: make install
 
       - name: sematic release
-        run: poetry run semantic-release version --no-push
+        run: poetry run semantic-release version --no-push --no-tag
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
