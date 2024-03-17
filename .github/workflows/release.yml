@@ -60,7 +60,7 @@ jobs:
         id: semantic-release
         run: |
           poetry run semantic-release version --prerelease --no-push --no-tag
-          echo "version=$(poetry version --short)" >> $GITHUB_OUTPUT
+          echo "version=$(poetry version --short)" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -152,7 +152,7 @@ jobs:
         id: semantic-release
         run: |
           poetry run semantic-release version --no-push
-          echo "version=$(poetry version --short)" >> $GITHUB_OUTPUT
+          echo "version=$(poetry version --short)" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
