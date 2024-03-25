@@ -15,7 +15,7 @@ atlassian-python-api = "^3.41.11"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"
-pytest-cov = "^4.0.0"
+pytest-cov = "^5.0.0"
 myst-nb = {version = "^1.0.0", python = "^3.12"}
 sphinx-autoapi = "^3.0.0"
 sphinx-rtd-theme = "^2.0.0"
