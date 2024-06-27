@@ -1,10 +1,296 @@
 # CHANGELOG
 
-
-
-## v0.5.4-rc.1 (2024-03-17)
+## v0.5.4-rc.1 (2024-06-27)
 
 ### Chore
+
+* chore(deps): update dependency ruff to ^0.5.0 (#225)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`3a1b2a1`](https://github.com/nakamasato/autonote/commit/3a1b2a16a7df1d09160556f90a0b5e599b4d8cd9))
+
+* chore(deps): update dependency myst-nb to v1.1.1 (#224)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`dc69512`](https://github.com/nakamasato/autonote/commit/dc6951235ef397ea3cc4ce7b29b8067f7e9a3912))
+
+* chore(deps): lock file maintenance (#223)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`e7c5d80`](https://github.com/nakamasato/autonote/commit/e7c5d8032e534dbf7724317b435cf49441dc2188))
+
+* chore(deps): update dependency ruff to v0.4.10 (#222)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`7192a46`](https://github.com/nakamasato/autonote/commit/7192a466f03b335a6efc63203204c3b3a124ded9))
+
+* chore(deps): update dependency sphinx-autoapi to v3.1.2 (#221)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`da9a5ec`](https://github.com/nakamasato/autonote/commit/da9a5ec1933b8964a29fc0cd862161b4173754aa))
+
+* chore(deps): update dependency python-semantic-release to v9.8.3 (#220)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`a8ac034`](https://github.com/nakamasato/autonote/commit/a8ac03481b6392667f7ef376986f7d148242ee14))
+
+* chore(deps): update dependency python-semantic-release to v9.8.2 (#219)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`3fc35bd`](https://github.com/nakamasato/autonote/commit/3fc35bddad6a42b041803fee83e375b8a070ae76))
+
+* chore(deps): lock file maintenance (#218)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`36952fb`](https://github.com/nakamasato/autonote/commit/36952fbe9bf7d47c36a0341c4b104d2aae00878f))
+
+* chore(deps): update dependency ruff to v0.4.9 (#217)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`01001d7`](https://github.com/nakamasato/autonote/commit/01001d767129e8e9b9f958998d79ebd68ac40aaa))
+
+* chore(deps): update actions/checkout digest to 692973e (#215)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`b32db65`](https://github.com/nakamasato/autonote/commit/b32db659c9515cdd775e1919814a4b15576b51af))
+
+* chore(deps): lock file maintenance (#214)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`bb3dbc1`](https://github.com/nakamasato/autonote/commit/bb3dbc1f5080041e79b4a18e17043580abd58f99))
+
+* chore(deps): update dependency ruff to v0.4.8 (#213)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`d29b704`](https://github.com/nakamasato/autonote/commit/d29b7047eb0bcd65546bb08b54c0123a84811671))
+
+* chore(deps): update dependency python-semantic-release to v9.8.1 (#212)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`0f6dfc6`](https://github.com/nakamasato/autonote/commit/0f6dfc6d3b3d51db8ccf0e81c0f864972f8d823f))
+
+* chore(deps): update dependency pytest to v8.2.2 (#211)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`b4f3c15`](https://github.com/nakamasato/autonote/commit/b4f3c1542660ff7a59ed3caab77232c1f37f83e0))
+
+* chore(deps): lock file maintenance (#210)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`238e9c5`](https://github.com/nakamasato/autonote/commit/238e9c5a8c25c27bbe2b5ef11b2d9131c7a6178b))
+
+* chore(deps): update dependency ruff to v0.4.7 (#209)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`eb79a59`](https://github.com/nakamasato/autonote/commit/eb79a59a948a12954babdb130ec27f96d7f35764))
+
+* chore(deps): update dependency ruff to v0.4.6 (#208)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`2f5745f`](https://github.com/nakamasato/autonote/commit/2f5745fb63ca45c44880bfa1673520b8150d88fb))
+
+* chore(deps): update dependency python-semantic-release to v9.8.0 (#207)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`872e83c`](https://github.com/nakamasato/autonote/commit/872e83c548685df233e46a4ad4b2f0523c92b2dc))
+
+* chore(deps): lock file maintenance (#206)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`1d19bea`](https://github.com/nakamasato/autonote/commit/1d19beac1589a980c1da02d4890e006b26d53b8c))
+
+* chore(deps): update dependency sphinx-autoapi to v3.1.1 (#205)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`94a52e6`](https://github.com/nakamasato/autonote/commit/94a52e63371bbd14d4906282d1bebc8df97ee00c))
+
+* chore(deps): update dependency ruff to v0.4.5 (#204)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`d9025c7`](https://github.com/nakamasato/autonote/commit/d9025c7a5a619e33effe95184fb951211992d4ce))
+
+* chore(deps): update dependency sphinx-autoapi to v3.1.0 (#202)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`a297c9e`](https://github.com/nakamasato/autonote/commit/a297c9ebf8ff61f6b8dc7fde3ee1d868892ec605))
+
+* chore(deps): update actions/checkout digest to a5ac7e5 (#195)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`851eb4c`](https://github.com/nakamasato/autonote/commit/851eb4c74d46dc4491b13c0d21c7a16d3f359ed5))
+
+* chore(deps): lock file maintenance (#201)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`42f1b00`](https://github.com/nakamasato/autonote/commit/42f1b00f8bddaea8bd26a59ad862cce4c14c0883))
+
+* chore(deps): update dependency pytest to v8.2.1 (#200)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`c615198`](https://github.com/nakamasato/autonote/commit/c615198e0fd24aa5dfabdab4a3adef3e5bd985b5))
+
+* chore(deps): update dependency python-semantic-release to v9.7.3 (#199)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`bebe538`](https://github.com/nakamasato/autonote/commit/bebe538b15a2af2c5184148aef950f0e42e93ee1))
+
+* chore(deps): update dependency python-semantic-release to v9.7.2 (#198)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`c0fd8ae`](https://github.com/nakamasato/autonote/commit/c0fd8aeefec8e580e7b0b71e57c3afbbb0204526))
+
+* chore(deps): lock file maintenance (#197)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`ee7c2b7`](https://github.com/nakamasato/autonote/commit/ee7c2b72639449789d43796626ec2993cf19289a))
+
+* chore(deps): update dependency ruff to v0.4.4 (#196)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`2548cd2`](https://github.com/nakamasato/autonote/commit/2548cd25369de9570d4ec7699891895bd7c8bce4))
+
+* chore(deps): update actions/checkout digest to 44c2b7a (#194)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`312e824`](https://github.com/nakamasato/autonote/commit/312e824394ab9bda0176cc40c45ec2cbcac8d5ab))
+
+* chore(deps): update dependency python-semantic-release to v9.7.1 (#193)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`be8ff86`](https://github.com/nakamasato/autonote/commit/be8ff8645d8aa808464de0de7d924dc040866a58))
+
+* chore(deps): lock file maintenance (#192)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`f59035f`](https://github.com/nakamasato/autonote/commit/f59035f219e7bc7680918925d30557c07d34a206))
+
+* chore(deps): update dependency python-semantic-release to v9.7.0 (#191)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`7c3a967`](https://github.com/nakamasato/autonote/commit/7c3a9676b263f7fc24eec43d2749a8ef4bb6e7ae))
+
+* chore(deps): lock file maintenance (#190)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`cc8a0ae`](https://github.com/nakamasato/autonote/commit/cc8a0ae1be309b10d52a35907730f2921df7475c))
+
+* chore(deps): update dependency ruff to v0.4.3 (#189)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`aeb14d6`](https://github.com/nakamasato/autonote/commit/aeb14d6a8974b5f0820fc911b2007f676a6a5184))
+
+* chore(deps): update dependency python-semantic-release to v9.6.0 (#188)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`e8f8cf3`](https://github.com/nakamasato/autonote/commit/e8f8cf3401b9072897789280e400c6b997cf117f))
+
+* chore(deps): lock file maintenance (#187)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`dd1ca3c`](https://github.com/nakamasato/autonote/commit/dd1ca3c239afea6f256f87323e424b3c2d3fcd75))
+
+* chore(deps): update dependency pytest to v8.2.0 (#186)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`9098694`](https://github.com/nakamasato/autonote/commit/90986943dd4a6bdc9ac8398f7361f21e7cd47753))
+
+* chore(deps): update dependency pytest to v8.1.2 (#185)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`95c2e4d`](https://github.com/nakamasato/autonote/commit/95c2e4dac508c34862fe474f89c498de1c5ecc0d))
+
+* chore(deps): update dependency ruff to v0.4.2 (#184)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`e14c159`](https://github.com/nakamasato/autonote/commit/e14c159164de7a09645267df9272629703c0777a))
+
+* chore(deps): update actions/checkout digest to 0ad4b8f (#183)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`5eed9ca`](https://github.com/nakamasato/autonote/commit/5eed9cab2c4a1a4777829b52176d72021cf5b0ee))
+
+* chore(deps): update dependency python-semantic-release to v9.5.0 (#182)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`de3f53a`](https://github.com/nakamasato/autonote/commit/de3f53a7fa1541446aabd7911e868ab1bd6ccb69))
+
+* chore(deps): update actions/checkout digest to 1d96c77 (#181)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`21d84d4`](https://github.com/nakamasato/autonote/commit/21d84d4e951ba8f46b37d0864ce2446a8fef82f7))
+
+* chore(deps): lock file maintenance (#180)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`b0ce5fa`](https://github.com/nakamasato/autonote/commit/b0ce5fa3b3464bdbb1e1bec06d3e4cdfd429a3cc))
+
+* chore(deps): update dependency ruff to v0.4.1 (#179)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`7149fb6`](https://github.com/nakamasato/autonote/commit/7149fb6d793775b93a0868c565aeb150ca9dfc51))
+
+* chore(deps): update dependency ruff to ^0.4.0 (#178)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`aa3adf9`](https://github.com/nakamasato/autonote/commit/aa3adf90fe14565ffa300a74ed9474f8b24d609e))
+
+* chore(deps): lock file maintenance (#177)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`d5c84cd`](https://github.com/nakamasato/autonote/commit/d5c84cd69ea1c240ca06725e82a5a82c2b83fe53))
+
+* chore(deps): update dependency python-semantic-release to v9.4.2 (#176)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`a40d9cb`](https://github.com/nakamasato/autonote/commit/a40d9cb9870e6ed472d31e73284e9cb99d3525c9))
+
+* chore(deps): update dependency myst-nb to v1.1.0 (#175)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`ab08990`](https://github.com/nakamasato/autonote/commit/ab089908784f71e67abddcb075631db70d86802a))
+
+* chore(deps): update dependency ruff to v0.3.7 (#174)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`8f03784`](https://github.com/nakamasato/autonote/commit/8f0378456bb6e17b861f04297d14f317bd99b8e1))
+
+* chore(deps): update dependency ruff to v0.3.6 (#173)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`81c349f`](https://github.com/nakamasato/autonote/commit/81c349f7dfd0abfd2690b3299aa0eb4fccf0390c))
+
+* chore(deps): lock file maintenance (#172)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`41fb56b`](https://github.com/nakamasato/autonote/commit/41fb56ba5a56673a438e0d9b1a8226942288954c))
+
+* chore(deps): update dependency python-semantic-release to v9.4.1 (#171)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`83ee899`](https://github.com/nakamasato/autonote/commit/83ee899319a25ea802b980929252502a1052d82c))
+
+* chore(deps): update dependency ruff to v0.3.5 (#170)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`9f9e079`](https://github.com/nakamasato/autonote/commit/9f9e079aac895c25c2a6b720ef28114ad74885d5))
+
+* chore(deps): lock file maintenance (#169)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`437efb6`](https://github.com/nakamasato/autonote/commit/437efb6c96147badf3a9412a16a6ec01c8350c2d))
+
+* chore(deps): update dependency python-semantic-release to v9.4.0 (#168)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`d8a2293`](https://github.com/nakamasato/autonote/commit/d8a22936334c84e82872a1da69110c98d79b3525))
+
+* chore(deps): update tj-actions/changed-files action to v44 (#167)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`74b51ae`](https://github.com/nakamasato/autonote/commit/74b51ae6c797e020241d69f1f7fa892d8009227d))
+
+* chore(deps): lock file maintenance (#166)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`546eac6`](https://github.com/nakamasato/autonote/commit/546eac664b86956ddc2174e651446e9090fa8243))
+
+* chore(deps): update dependency pytest-cov to v5 (#165)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`3bd5fb1`](https://github.com/nakamasato/autonote/commit/3bd5fb1a1fc9bb83839a32e6a315db232becfd38))
+
+* chore(deps): update dependency python-semantic-release to v9.3.1 (#164)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`d1ec7b3`](https://github.com/nakamasato/autonote/commit/d1ec7b30388a863afb509c384395fb05115d46f4))
+
+* chore(deps): update dependency ruff to v0.3.4 (#163)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`2316615`](https://github.com/nakamasato/autonote/commit/23166151604ac0e19cb1d5b9ea8b2686642c4917))
+
+* chore(deps): update dependency python-semantic-release to v9.3.0 (#162)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`5019e6a`](https://github.com/nakamasato/autonote/commit/5019e6a6ec9bd922835310abd931804547fe25dd))
+
+* chore(deps): update dependency python-semantic-release to v9.2.2 (#161)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`9731aea`](https://github.com/nakamasato/autonote/commit/9731aea2608b2665111f6bde1c9816217a8d5ab9))
+
+* chore(deps): update dependency python-semantic-release to v9.2.0 (#160)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`ce8c17e`](https://github.com/nakamasato/autonote/commit/ce8c17e8154b36488130faf0002bc8709bb95049))
+
+* chore(deps): lock file maintenance (#159)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`be35357`](https://github.com/nakamasato/autonote/commit/be3535723d5ad4f78f890e497c4aa00e77b92d16))
+
+* chore: update (#158) ([`ece86fb`](https://github.com/nakamasato/autonote/commit/ece86fba92a54a069040b1366f433cd839e7e66d))
+
+* chore: fix (#157) ([`bc79709`](https://github.com/nakamasato/autonote/commit/bc79709d88633ae63ca419504604321636067895))
+
+### Fix
+
+* fix(deps): update dependency atlassian-python-api to v3.41.14 (#216)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`08a762c`](https://github.com/nakamasato/autonote/commit/08a762c0efb2a20ddebcf2d06e43a7c8e855a84c))
+
+* fix(deps): update dependency atlassian-python-api to v3.41.13 (#203)
+
+Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`214d05e`](https://github.com/nakamasato/autonote/commit/214d05eb4a5d5f4dff48ceea0ae1a00142f0d434))
+
+## v0.5.4 (2024-03-17)
+
+### Chore
+
+* chore: fix branch in checkout (#156) ([`86d67fe`](https://github.com/nakamasato/autonote/commit/86d67fe73870f3b1a735e9e81ca329c72ffb67d0))
+
+* chore: fix release flow (#155) ([`2b6c42c`](https://github.com/nakamasato/autonote/commit/2b6c42cd3eb2522f4832aa23acee672b8e162d1f))
+
+* chore: fix config (#153) ([`37fa6b5`](https://github.com/nakamasato/autonote/commit/37fa6b5c1615a6640971808c2898a4a7bda2c342))
+
+* chore: release new version 0.5.4-rc.1 (#152)
+
+Co-authored-by: semantic-release &lt;semantic-release&gt; ([`0c5f4d7`](https://github.com/nakamasato/autonote/commit/0c5f4d7e0f5bf25f7974994198f1a7ce27b7ca13))
 
 * chore: prerelease new version 0.5.4-rc.1 (#150)
 
@@ -211,7 +497,6 @@ Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.co
 Co-authored-by: semantic-release &lt;semantic-release&gt; ([`5472ee2`](https://github.com/nakamasato/autonote/commit/5472ee278cbe63cf8174eeec7dc4ed552a101b29))
 
 * Update semantic-pull-request.yml ([`1283e92`](https://github.com/nakamasato/autonote/commit/1283e92aeba0fb49c4d8d190c41906a49baa8f5d))
-
 
 ## v0.5.0 (2023-08-27)
 
@@ -421,7 +706,6 @@ Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.co
 
 Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`f1d8750`](https://github.com/nakamasato/autonote/commit/f1d87505a159937ae9b90d3d11aabd45abc0a9ab))
 
-
 ## v0.4.0 (2023-02-04)
 
 ### Chore
@@ -438,7 +722,6 @@ Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.co
 
 * feat: enable to create a notion page from a template with dynamic values (#20) ([`503625b`](https://github.com/nakamasato/autonote/commit/503625bdf865141a43f19fbab327eba6598725c5))
 
-
 ## v0.3.0 (2023-02-02)
 
 ### Chore
@@ -451,13 +734,11 @@ Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.co
 
 * feat: enable to create notion page from template (#18) ([`1147ce7`](https://github.com/nakamasato/autonote/commit/1147ce79eba32b094391e8f5a3d4a3c3bc944294))
 
-
 ## v0.2.3 (2023-01-10)
 
 ### Chore
 
 * chore: separate pull request and release workflow (#16) ([`7ddce6b`](https://github.com/nakamasato/autonote/commit/7ddce6b7e6d161c56877a95157aa8e96bd4a12ae))
-
 
 ## v0.2.2 (2023-01-10)
 
@@ -465,20 +746,17 @@ Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.co
 
 * chore: add if condition to install poetry step (#15) ([`5a03107`](https://github.com/nakamasato/autonote/commit/5a031072037289d5b4e5ab51d93e2ed6075c43c8))
 
-
 ## v0.2.1 (2023-01-07)
 
 ### Chore
 
 * chore: add cache for poetry installation (#14) ([`92a89c5`](https://github.com/nakamasato/autonote/commit/92a89c5199f34fe0e64f13c855645e8f2b3a6c53))
 
-
 ## v0.2.0 (2023-01-05)
 
 ### Feature
 
 * feat: enable to create notion page (#13) ([`ede0ed4`](https://github.com/nakamasato/autonote/commit/ede0ed43e648f682bae4c262a025e8b4b8935d98))
-
 
 ## v0.1.7 (2023-01-05)
 
@@ -488,20 +766,17 @@ Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.co
 
 Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`7ea6116`](https://github.com/nakamasato/autonote/commit/7ea6116013aba3555497855cb0dc257cfcfe4ace))
 
-
 ## v0.1.6 (2023-01-05)
 
 ### Chore
 
 * chore: add lint (#10) ([`6d824b9`](https://github.com/nakamasato/autonote/commit/6d824b9765548b52603f8b966b674a0c8f24cdac))
 
-
 ## v0.1.5 (2023-01-05)
 
 ### Chore
 
 * chore: update ci/cd (#9) ([`b61c2bd`](https://github.com/nakamasato/autonote/commit/b61c2bdd295c0c83262897035d093835f62b5d21))
-
 
 ## v0.1.4 (2023-01-05)
 
@@ -518,7 +793,6 @@ Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.co
 * chore: configure Renovate (#5)
 
 Co-authored-by: renovate[bot] &lt;29139614+renovate[bot]@users.noreply.github.com&gt; ([`f927c4d`](https://github.com/nakamasato/autonote/commit/f927c4d3b5b48819b0df731848738163a1c51ec1))
-
 
 ## v0.1.3 (2023-01-05)
 
