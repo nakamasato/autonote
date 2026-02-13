@@ -90,7 +90,7 @@ jobs:
 
       - name: Create Pull Request
         if: steps.changed-files-specific.outputs.any_changed == 'true'
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           title: "chore: prerelease new version ${{ steps.semantic-release.outputs.version }}"
           commit-message: "chore: prerelease new version ${{ steps.semantic-release.outputs.version }}"
@@ -180,7 +180,7 @@ jobs:
           skip_existing: true
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           title: "chore: release new version ${{ steps.semantic-release.outputs.version }}"
           commit-message: "chore: release new version ${{ steps.semantic-release.outputs.version }}"
