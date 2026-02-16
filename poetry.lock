@@ -1444,13 +1444,13 @@ files = [
 
 [[package]]
 name = "notion-client"
-version = "2.7.0"
+version = "3.0.0"
 description = "Python client for the official Notion API"
 optional = false
 python-versions = "<4,>=3.8"
 files = [
-    {file = "notion_client-2.7.0-py2.py3-none-any.whl", hash = "sha256:9057a8ac2103ff245556c2a5102bde1d2ccdd3505f66bcc130fc31857731d91e"},
-    {file = "notion_client-2.7.0.tar.gz", hash = "sha256:31bde3ae03ede77650cadce136152916efdd86579ff65f49fc6705fbe462e2fb"},
+    {file = "notion_client-3.0.0-py2.py3-none-any.whl", hash = "sha256:177fc3d2ace7e8ef69cf96f46269e8a66071c2c7c526194bf06ce7925853e759"},
+    {file = "notion_client-3.0.0.tar.gz", hash = "sha256:05c4d2b4fa3491dc0de21c9c826277202ea8b8714077ee7f51a6e1a09ab23d0f"},
 ]
 
 [package.dependencies]
@@ -2968,4 +2968,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10, <4"
-content-hash = "367a8dfcb7858af25d05aa5f0ac3fb6d41a8d61e84ceb94153fadd4854b00789"
+content-hash = "8e2a761f02b1d732aa5dbc8c1c1bbac46e7c55e91aede50146291add74ae4a3a"
