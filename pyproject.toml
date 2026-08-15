@@ -9,7 +9,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = ">=3.10, <4"
 notion-client = "^3.0.0"
-atlassian-python-api = "^4.0.0"
+atlassian-python-api = "^5.0.0"
 
 [tool.poetry.dev-dependencies]
 
