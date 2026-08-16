@@ -83,13 +83,13 @@ test = ["astroid (>=2,<5)", "pytest (<9.0)", "pytest-cov", "pytest-xdist"]
 
 [[package]]
 name = "atlassian-python-api"
-version = "5.0.1"
+version = "5.0.2"
 description = "Python Atlassian REST API Wrapper"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "atlassian_python_api-5.0.1-py3-none-any.whl", hash = "sha256:650b20ee660e80e31f3f76e7fcbc3c45d66da6cd7266a217d680a5af1666abb1"},
-    {file = "atlassian_python_api-5.0.1.tar.gz", hash = "sha256:d4c724647c3797340bd1aae19bf03bf7e2f0218efcc825fcffe3e564838ac64b"},
+    {file = "atlassian_python_api-5.0.2-py3-none-any.whl", hash = "sha256:1d26f1ab65dc7a2f9e37cbbe5c6646cc39206de0ab4dd80dd9f91dc49c0ac90d"},
+    {file = "atlassian_python_api-5.0.2.tar.gz", hash = "sha256:d4d4adb747048d637aaa63fbd14791d742f17172f6d02b03c23d9a5aaa038276"},
 ]
 
 [package.dependencies]
