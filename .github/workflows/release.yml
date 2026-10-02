@@ -71,7 +71,7 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           repository-url: https://test.pypi.org/legacy/
-          skip_existing: true
+          skip-existing: true
 
       # TODO: fix
       # - name: Test install from TestPyPI
@@ -149,13 +149,10 @@ jobs:
       - name: Install package
         run: make install
 
-      - name: sematic release
-        id: semantic-release
+      - name: Read package version
+        id: package-version
         run: |
-          poetry run semantic-release version --no-push
           echo "version=$(poetry version --short)" >> "$GITHUB_OUTPUT"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build package
         run: make build
@@ -177,15 +174,11 @@ jobs:
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          skip_existing: true
+          skip-existing: true
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7
-        with:
-          title: "chore: release new version ${{ steps.semantic-release.outputs.version }}"
-          commit-message: "chore: release new version ${{ steps.semantic-release.outputs.version }}"
-          labels: release
-          branch: release
-          body: |
-            New version ${{ steps.semantic-release.outputs.version }} is released.
-            You can check on https://pypi.org/project/autonote/
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_VERSION: ${{ steps.package-version.outputs.version }}
+        run: |
+          gh release create "v${RELEASE_VERSION}" dist/* --target "$GITHUB_SHA" --title "v${RELEASE_VERSION}" --generate-notes

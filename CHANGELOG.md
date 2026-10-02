@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.5.5 (2026-10-02)
+
+### Fixes
+
+* Support the current Notion API when copying page templates, including blocks with unset optional fields.
+
 
 
 ## v0.5.4-rc.1 (2024-03-17)
