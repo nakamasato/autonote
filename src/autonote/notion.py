@@ -169,6 +169,15 @@ class NotionPageContent:
                     dt += timedelta(days=1)
 
     @staticmethod
+    def _without_null_fields(value):
+        """Omit unset response fields from block creation requests."""
+        if isinstance(value, dict):
+            return {key: NotionPageContent._without_null_fields(item) for key, item in value.items() if item is not None}
+        if isinstance(value, list):
+            return [NotionPageContent._without_null_fields(item) for item in value]
+        return value
+
+    @staticmethod
     def as_write_block(block: dict) -> dict:
         """Keep block content while removing fields returned only by read requests."""
         block_type = block["type"]
@@ -178,7 +187,7 @@ class NotionPageContent:
                 data[key] = [{field: value for field, value in item.items() if field not in {"plain_text", "href"}} for item in data[key]]
         if "children" in data:
             data["children"] = [NotionPageContent.as_write_block(child) for child in data["children"]]
-        return {"object": "block", "type": block_type, block_type: data}
+        return {"object": "block", "type": block_type, block_type: NotionPageContent._without_null_fields(data)}
 
 
 class NotionClient:

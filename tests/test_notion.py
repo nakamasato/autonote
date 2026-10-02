@@ -311,6 +311,22 @@ def test_notion_page_content_update_contents_replace_datetime():
     assert content.contents[2]["heading_1"]["rich_text"][0]["plain_text"] == "2023-01-01 (月)"
 
 
+def test_write_block_omits_null_optional_fields():
+    block = {
+        "type": "paragraph",
+        "paragraph": {
+            "icon": None,
+            "rich_text": [{"type": "text", "text": {"content": "Example", "link": None}, "plain_text": "Example", "href": None}],
+        },
+    }
+
+    assert NotionPageContent.as_write_block(block) == {
+        "object": "block",
+        "type": "paragraph",
+        "paragraph": {"rich_text": [{"type": "text", "text": {"content": "Example"}}]},
+    }
+
+
 def test_create_page_from_template_uses_data_source_and_writable_blocks():
     client = NotionClient.__new__(NotionClient)
     client.client = Mock()
