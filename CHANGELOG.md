@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.5.6 (2026-10-02)
+
+### Maintenance
+
+* Update GitHub Actions and Poetry used by CI and release workflows.
+
 ## v0.5.5 (2026-10-02)
 
 ### Fixes
