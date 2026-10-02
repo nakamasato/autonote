@@ -1,8 +1,12 @@
 import argparse
 import os
+from copy import deepcopy
 from datetime import datetime, timedelta
 
 from notion_client import Client
+
+NOTION_API_VERSION = "2026-03-11"
+MAX_CHILDREN_PER_REQUEST = 100
 
 
 class NotionMock:
@@ -14,17 +18,17 @@ class NotionMock:
 class NotionPage:
     """NotionPage contains parent and properties"""
 
-    def __init__(self, title: str, parent_type: str, properties: dict = None, **kwargs) -> None:
+    def __init__(self, title: str, parent_type: str, properties: dict | None = None, **kwargs) -> None:
         """Initialize NotionPage.
 
         Args:
             title(str): required to determine Notion page by title
-            parent_type(str): one of 'database_id' or 'page_id'
+            parent_type(str): one of 'data_source_id', 'database_id', or 'page_id'
             properties(dict): Notion property item. https://developers.notion.com/reference/property-item-object
         """
         self.title = title
-        if parent_type not in {"database_id", "page_id"}:
-            raise ValueError("parent_type must be one of 'database_id' or 'page_id'")
+        if parent_type not in {"data_source_id", "database_id", "page_id"}:
+            raise ValueError("parent_type must be one of 'data_source_id', 'database_id', or 'page_id'")
         self.parent_type = parent_type
         self.properties = {
             "title": [
@@ -63,9 +67,8 @@ class NotionPage:
         """
         for k, v in properties.items():
             # skip title
-            if v["type"] == "title":
-                continue
-            elif v["type"] in {  # uneditable
+            if v["type"] in {  # uneditable
+                "title",
                 "created_by",
                 "last_edited_by",
                 "last_edited_time",
@@ -145,7 +148,7 @@ class NotionPageContent:
             "heading_2",
             "heading_3",
         ]
-        start_dt = datetime.strptime(start_date, date_format)
+        start_dt = datetime.strptime(start_date, date_format)  # noqa: DTZ007 - date-only template text
         dt = start_dt
         for blk in self.contents:
             if blk["type"] not in SUPPORTED_BLOCK_TYPES:
@@ -165,10 +168,31 @@ class NotionPageContent:
                 if increment is True:
                     dt += timedelta(days=1)
 
+    @staticmethod
+    def _without_null_fields(value):
+        """Omit unset response fields from block creation requests."""
+        if isinstance(value, dict):
+            return {key: NotionPageContent._without_null_fields(item) for key, item in value.items() if item is not None}
+        if isinstance(value, list):
+            return [NotionPageContent._without_null_fields(item) for item in value]
+        return value
+
+    @staticmethod
+    def as_write_block(block: dict) -> dict:
+        """Keep block content while removing fields returned only by read requests."""
+        block_type = block["type"]
+        data = deepcopy(block[block_type])
+        for key in ("rich_text", "caption"):
+            if key in data:
+                data[key] = [{field: value for field, value in item.items() if field not in {"plain_text", "href"}} for item in data[key]]
+        if "children" in data:
+            data["children"] = [NotionPageContent.as_write_block(child) for child in data["children"]]
+        return {"object": "block", "type": block_type, block_type: NotionPageContent._without_null_fields(data)}
+
 
 class NotionClient:
     def __init__(self):
-        self.client = Client(auth=os.environ["NOTION_INTEGRATION_TOKEN"])
+        self.client = Client(auth=os.environ["NOTION_INTEGRATION_TOKEN"], notion_version=NOTION_API_VERSION)
 
     def create_page(self, parent_page_id, title, body, override=False):
         """Create or update page.
@@ -181,16 +205,13 @@ class NotionClient:
         content = NotionPageContent(body=body)
         pages = self.search_pages(query=title)
         if len(pages) == 0 or override is False:
-            res = self.client.pages.create(**pages_kwargs)
+            res = self.client.pages.create(**pages_kwargs, children=content.contents)
             print(f"page created successfully (id: {res['id']})")
-            page_id = res["id"]
         else:
             page_id = pages[0]["id"]  # update the first matched page
             res = self.client.pages.update(page_id, **pages_kwargs)
             print(f"page updated successfully (id: {page_id})")
-
-        # update contents
-        self.update_contents(page_id=page_id, contents=content.contents)
+            self.update_contents(page_id=page_id, contents=content.contents)
         return {"id": res["id"]}
 
     def create_page_from_template(self, template_id, title, override=False, **kwargs):
@@ -201,36 +222,39 @@ class NotionClient:
 
         # Prepare NotionPage and NotionPageContent from template
         tpl = self.get_page(page_id=template_id)
-        if tpl["parent"]["type"] != "database_id":
-            raise ValueError("The given template_id {template_id} is not a database template.")
-        database_id = tpl["parent"]["database_id"]
+        parent = tpl["parent"]
+        if parent["type"] == "data_source_id":
+            data_source_id = parent["data_source_id"]
+        elif parent["type"] == "database_id":
+            data_source_id = self._single_data_source_id(parent["database_id"])
+        else:
+            raise ValueError(f"The given template_id {template_id} is not a database template.")
         pages_kwargs = NotionPage(  # only properties
             title=title,
-            parent_type="database_id",
+            parent_type="data_source_id",
             properties=tpl["properties"],
             **kwargs,  # update properties
-        ).pages_kwargs(parent_id=database_id)
+        ).pages_kwargs(parent_id=data_source_id)
         # To get contents of a page, Retrieve block children
         # https://developers.notion.com/reference/get-block-children
-        child_blocks = self.get_child_blocks(block_id=template_id)
-        content = NotionPageContent(contents=child_blocks["results"], **kwargs)
+        content = NotionPageContent(contents=self._template_blocks(template_id), **kwargs)
+        children = [content.as_write_block(block) for block in content.contents]
+        if len(children) > MAX_CHILDREN_PER_REQUEST:
+            raise ValueError("A template with more than 100 top-level blocks is not supported")
 
         # Create or update a page
-        res = self.get_database(
-            database_id=database_id,
-            **{"filter": {"property": "title", "title": {"equals": title}}},
+        res = self.get_data_source(
+            data_source_id=data_source_id,
+            filter={"property": "title", "title": {"equals": title}},
         )
         if len(res["results"]) == 0 or override is False:
-            print(f"create a new page under database_id: {database_id}")
-            res = self.client.pages.create(**pages_kwargs)  # create an empty page
-            page_id = res["id"]
+            print(f"create a new page under data_source_id: {data_source_id}")
+            res = self.client.pages.create(**pages_kwargs, children=children)
         else:
             page_id = res["results"][0]["id"]
             print(f"page with title '{title}' already exists (id: {page_id})")
             res = self.client.pages.update(page_id, **pages_kwargs)  # only update properties
-
-        # update contents
-        self.update_contents(page_id=page_id, contents=content.contents)
+            self.update_contents(page_id=page_id, contents=children)
 
         return res
 
@@ -254,36 +278,59 @@ class NotionClient:
         return self.client.pages.retrieve(page_id=page_id)
 
     def get_database(self, database_id: str, **kwargs) -> dict:
-        """Query database
-        1. get database with database_id
-        2. search pages in the database
-        Example:
-            kwargs = {"filter": {"property": "title", "title": {"equals": "test"}}}
-            get_database(database_id=database_id, **kwargs)
+        """Query the only data source in a database."""
+        return self.get_data_source(self._single_data_source_id(database_id), **kwargs)
 
-        """
-        return self.client.databases.query(database_id=database_id, **kwargs)
+    def get_data_source(self, data_source_id: str, **kwargs) -> dict:
+        """Query a data source for its pages."""
+        return self.client.data_sources.query(data_source_id=data_source_id, **kwargs)
 
-    def get_child_blocks(self, block_id: str) -> dict:
+    def _single_data_source_id(self, database_id: str) -> str:
+        data_sources = self.client.databases.retrieve(database_id=database_id)["data_sources"]
+        if len(data_sources) != 1:
+            raise ValueError("The database must have exactly one data source; use a data source template")
+        return data_sources[0]["id"]
+
+    def _all_child_blocks(self, block_id: str) -> list[dict]:
+        """Read every page of direct child blocks."""
+        blocks = []
+        cursor = None
+        while True:
+            kwargs = {"start_cursor": cursor} if cursor else {}
+            response = self.get_child_blocks(block_id=block_id, **kwargs)
+            blocks.extend(response["results"])
+            if not response.get("has_more"):
+                break
+            cursor = response["next_cursor"]
+        return blocks
+
+    def _template_blocks(self, block_id: str, depth: int = 0) -> list[dict]:
+        """Read template blocks, including nested content."""
+        blocks = self._all_child_blocks(block_id)
+        for block in blocks:
+            if block.get("has_children"):
+                if depth >= 1:
+                    raise ValueError("Templates with blocks nested more than two levels are not supported")
+                block[block["type"]]["children"] = self._template_blocks(block["id"], depth + 1)
+        return blocks
+
+    def get_child_blocks(self, block_id: str, **kwargs) -> dict:
         """Get children blocks.
         You can pass page_id to get the contents of a page.
         """
-        return self.client.blocks.children.list(block_id)
+        return self.client.blocks.children.list(block_id, **kwargs)
 
     def update_contents(self, page_id: str, contents: dict):
         """Update a page with the given contents."""
-        blk_children = self.client.blocks.children.list(page_id)
-        print(f"{len(blk_children['results'])} blocks exist in page '{page_id}'")
-
-        cur_size = len(blk_children["results"])
-        # delete all existing blocks
-        for i in range(cur_size):
-            block_id = blk_children["results"][i]["id"]
-            print(f"delete existing block {i} (block_id: {block_id})")
-            self.client.blocks.delete(block_id=block_id)
-        # append new blocks
-        print("append new blocks")
-        self.client.blocks.children.append(block_id=page_id, **{"children": contents})
+        existing = self._all_child_blocks(page_id)
+        print(f"{len(existing)} blocks exist in page '{page_id}'")
+        if len(contents) > MAX_CHILDREN_PER_REQUEST:
+            raise ValueError("More than 100 top-level blocks are not supported")
+        if contents:
+            self.client.blocks.children.append(block_id=page_id, children=contents)
+        for i, block in enumerate(existing):
+            print(f"delete existing block {i} (block_id: {block['id']})")
+            self.client.blocks.delete(block_id=block["id"])
 
 
 if __name__ == "__main__":

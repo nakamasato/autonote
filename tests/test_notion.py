@@ -1,6 +1,8 @@
+from unittest.mock import Mock
+
 import pytest
 
-from autonote.notion import NotionPage, NotionPageContent
+from autonote.notion import NOTION_API_VERSION, NotionClient, NotionPage, NotionPageContent
 
 
 def test_notion_page_parent_type():
@@ -18,6 +20,25 @@ def test_notion_page_simple_database():
         },
         "properties": {"title": [{"type": "text", "text": {"content": "test title"}}]},
     }
+
+
+def test_notion_page_data_source_parent():
+    page = NotionPage(title="test title", parent_type="data_source_id")
+    assert page.pages_kwargs(parent_id="source-id")["parent"] == {
+        "type": "data_source_id",
+        "data_source_id": "source-id",
+    }
+
+
+def test_notion_client_uses_latest_api_version(monkeypatch):
+    token = "test-token"
+    monkeypatch.setenv("NOTION_INTEGRATION_TOKEN", token)
+    sdk_client = Mock()
+    monkeypatch.setattr("autonote.notion.Client", sdk_client)
+
+    NotionClient()
+
+    sdk_client.assert_called_once_with(auth=token, notion_version=NOTION_API_VERSION)
 
 
 def test_notion_page_with_properties_tag():
@@ -288,3 +309,98 @@ def test_notion_page_content_update_contents_replace_datetime():
     content = NotionPageContent("body", contents=contents, replace_rules=replace_rules)
     assert content.contents[2]["heading_1"]["rich_text"][0]["text"]["content"] == "2023-01-01 (月)"
     assert content.contents[2]["heading_1"]["rich_text"][0]["plain_text"] == "2023-01-01 (月)"
+
+
+def test_write_block_omits_null_optional_fields():
+    block = {
+        "type": "paragraph",
+        "paragraph": {
+            "icon": None,
+            "rich_text": [{"type": "text", "text": {"content": "Example", "link": None}, "plain_text": "Example", "href": None}],
+        },
+    }
+
+    assert NotionPageContent.as_write_block(block) == {
+        "object": "block",
+        "type": "paragraph",
+        "paragraph": {"rich_text": [{"type": "text", "text": {"content": "Example"}}]},
+    }
+
+
+def test_create_page_from_template_uses_data_source_and_writable_blocks():
+    client = NotionClient.__new__(NotionClient)
+    client.client = Mock()
+    client.client.pages.retrieve.return_value = {
+        "parent": {"type": "data_source_id", "data_source_id": "source-id"},
+        "properties": {"Name": {"type": "title", "title": []}},
+    }
+    client.client.data_sources.query.return_value = {"results": []}
+    client.client.pages.create.return_value = {"id": "new-page"}
+    heading = {
+        "object": "block",
+        "id": "heading-id",
+        "parent": {"type": "page_id", "page_id": "template-id"},
+        "archived": False,
+        "in_trash": False,
+        "has_children": False,
+        "type": "heading_1",
+        "heading_1": {"rich_text": [{"type": "text", "text": {"content": "Hello"}, "plain_text": "Hello", "href": None}]},
+    }
+    list_item = {
+        "object": "block",
+        "id": "list-id",
+        "has_children": True,
+        "type": "bulleted_list_item",
+        "bulleted_list_item": {"rich_text": []},
+    }
+    child = {
+        "object": "block",
+        "id": "child-id",
+        "has_children": False,
+        "type": "paragraph",
+        "paragraph": {"rich_text": [{"type": "text", "text": {"content": "Nested"}, "plain_text": "Nested"}]},
+    }
+
+    def list_blocks(block_id, **kwargs):
+        if block_id == "template-id" and not kwargs:
+            return {"results": [heading], "has_more": True, "next_cursor": "next"}
+        if block_id == "template-id" and kwargs == {"start_cursor": "next"}:
+            return {"results": [list_item], "has_more": False}
+        if block_id == "list-id":
+            return {"results": [child], "has_more": False}
+        raise AssertionError((block_id, kwargs))
+
+    client.client.blocks.children.list.side_effect = list_blocks
+    result = client.create_page_from_template("template-id", "New page")
+
+    assert result == {"id": "new-page"}
+    client.client.data_sources.query.assert_called_once_with(data_source_id="source-id", filter={"property": "title", "title": {"equals": "New page"}})
+    create_kwargs = client.client.pages.create.call_args.kwargs
+    assert create_kwargs["parent"] == {"type": "data_source_id", "data_source_id": "source-id"}
+    assert create_kwargs["children"] == [
+        {"object": "block", "type": "heading_1", "heading_1": {"rich_text": [{"type": "text", "text": {"content": "Hello"}}]}},
+        {
+            "object": "block",
+            "type": "bulleted_list_item",
+            "bulleted_list_item": {
+                "rich_text": [],
+                "children": [{"object": "block", "type": "paragraph", "paragraph": {"rich_text": [{"type": "text", "text": {"content": "Nested"}}]}}],
+            },
+        },
+    ]
+    client.client.blocks.children.append.assert_not_called()
+
+
+def test_update_contents_keeps_old_blocks_if_append_fails():
+    client = NotionClient.__new__(NotionClient)
+    client.client = Mock()
+    client.client.blocks.children.list.return_value = {
+        "results": [{"id": "existing-id", "has_children": False, "type": "paragraph", "paragraph": {"rich_text": []}}],
+        "has_more": False,
+    }
+    client.client.blocks.children.append.side_effect = RuntimeError("append failed")
+
+    with pytest.raises(RuntimeError, match="append failed"):
+        client.update_contents("page-id", [{"object": "block", "type": "paragraph", "paragraph": {"rich_text": []}}])
+
+    client.client.blocks.delete.assert_not_called()
