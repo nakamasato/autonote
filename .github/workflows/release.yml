@@ -1,175 +1,38 @@
-name: release # you cannot change this workflow name as it's used for trusted publisher
+name: release # trusted publisher workflow name
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 jobs:
-  prerelease:
+  release:
+    if: github.ref == 'refs/heads/main'
     environment:
       name: pypi
       url: https://pypi.org/p/autonote
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    concurrency: prerelease
     permissions:
       id-token: write
       contents: write
-      pull-requests: write
-
-    steps:
-      - name: Check-out repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          fetch-depth: 0
-
-      - name: Set up Python
-        id: setup-python
-        uses: actions/setup-python@v7
-        with:
-          python-version-file: .python-version
-
-      - name: Load cached Poetry installation
-        id: cached-poetry
-        uses: actions/cache@v6
-        with:
-          path: ~/.local  # the path depends on the OS
-          key: poetry-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-2.5.1
-
-      - name: Install poetry
-        if: steps.cached-poetry.outputs.cache-hit != 'true'
-        uses: snok/install-poetry@v1
-        with:
-          version: 2.5.1
-          virtualenvs-create: true # true by default
-          virtualenvs-in-project: true # false by default
-          installer-parallel: true
-
-      - name: Restore cached dependencies
-        uses: actions/cache@v6
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
-
-      - name: Install
-        run: make install
-
-      - name: sematic release
-        id: semantic-release
-        run: |
-          poetry run semantic-release version --prerelease --no-push --no-tag
-          echo "version=$(poetry version --short)" >> "$GITHUB_OUTPUT"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build package
-        run: make build
-
-      - name: Publish to TestPyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          repository-url: https://test.pypi.org/legacy/
-          skip-existing: true
-
-      # TODO: fix
-      # - name: Test install from TestPyPI
-      #   run: |
-      #       pip install \
-      #       --index-url https://test.pypi.org/simple/ \
-      #       --extra-index-url https://pypi.org/simple \
-      #       autonote==$(poetry version --short)
-
-      - name: Get changed files in the docs folder
-        id: changed-files-specific
-        uses: tj-actions/changed-files@v47
-        with:
-          files: |
-            pyproject.toml
-
-      - name: Create Pull Request
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
-        uses: peter-evans/create-pull-request@v8
-        with:
-          title: "chore: prerelease new version ${{ steps.semantic-release.outputs.version }}"
-          commit-message: "chore: prerelease new version ${{ steps.semantic-release.outputs.version }}"
-          labels: prerelease
-          branch: prerelease
-          add-paths: |
-            pyproject.toml
-          body: |
-            New version ${{ steps.semantic-release.outputs.version }} is prereleased.
-            You can check on https://test.pypi.org/project/autonote/
-
-  release:
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
-    environment:
-      name: pypi
-      url: https://pypi.org/p/autonote
-    permissions:
-      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
-      contents: write  # to create GitHub Releases
-      pull-requests: write # to create pull requests
     runs-on: ubuntu-latest
     steps:
-      - name: Check-out repository
+      - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          fetch-depth: 0
 
-      - name: Set up Python
-        id: setup-python
-        uses: actions/setup-python@v7
+      - name: Install uv and Python
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9
         with:
-          python-version-file: .python-version
-
-      - name: Load cached Poetry installation
-        id: cached-poetry
-        uses: actions/cache@v6
-        with:
-          path: ~/.local  # the path depends on the OS
-          key: poetry-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-2.5.1
-
-      - name: Install poetry
-        if: steps.cached-poetry.outputs.cache-hit != 'true'
-        uses: snok/install-poetry@v1
-        with:
-          version: 2.5.1
-          virtualenvs-create: true # true by default
-          virtualenvs-in-project: true # false by default
-          installer-parallel: true
-
-      - name: Restore cached dependencies
-        uses: actions/cache@v6
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          version: '0.12.22'
+          python-version: '3.14'
+          enable-cache: true
 
       - name: Install package
-        run: make install
+        run: uv sync --locked --no-dev
 
       - name: Read package version
         id: package-version
-        run: |
-          echo "version=$(poetry version --short)" >> "$GITHUB_OUTPUT"
+        run: echo "version=$(uv version --short)" >> "$GITHUB_OUTPUT"
 
       - name: Build package
-        run: make build
-
-      # ERROR: This filename has already been used, use a different version.
-      # - name: Publish to TestPyPI
-      #   uses: pypa/gh-action-pypi-publish@release/v1
-      #   with:
-      #     repository-url: https://test.pypi.org/legacy/
-      #     skip_existing: true
-
-      # - name: Test install from TestPyPI
-      #   run: |
-      #       pip install \
-      #       --index-url https://test.pypi.org/simple/ \
-      #       --extra-index-url https://pypi.org/simple \
-      #       autonote
+        run: uv build
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1

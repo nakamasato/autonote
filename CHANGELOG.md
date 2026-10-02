@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v0.6.0 (2026-10-02)
+
+### Changes
+
+* Use uv for dependency management, builds, and release workflows.
+* Support Python 3.13 and 3.14.
+
 ## v0.5.6 (2026-10-02)
 
 ### Maintenance

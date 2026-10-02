@@ -43,10 +43,10 @@ If you are proposing a feature:
 Ready to contribute? Here's how to set up `autonote` for local development.
 
 1. Download a copy of `autonote` locally.
-2. Install `autonote` using `poetry`:
+2. Install `autonote` using [uv](https://docs.astral.sh/uv/):
 
     ```console
-    $ poetry install
+    $ uv sync --all-groups
     ```
 
 3. Use `git` (or similar) to create a branch for local development and make your changes:
@@ -57,22 +57,16 @@ Ready to contribute? Here's how to set up `autonote` for local development.
 
 4. When you're done making changes, check that your changes conform to any code formatting requirements and pass any tests.
 
-    1. Test example scripts.
+    1. Prepare an `.env` file and test an example script. This creates a Confluence page.
         ```
-        poetry self add poetry-dotenv-plugin
-        ```
-
-    1. Prepare `.env` file. (Will actually create a Confluence page)
-        ```
-        poetry run python examples/create_confluence_page.py
+        uv run --env-file .env python examples/create_confluence_page.py
         ```
 
 5. Commit your changes and open a pull request.
 
 ## Release
 
-Release is done by GitHub Actions `release.yml`, which publishes the latest version to test.pypi.org and pypi.org using
-a [trusted publisher](https://docs.pypi.org/trusted-publishers/adding-a-publisher/)
+Update the version and changelog, merge the change into `main`, then manually run the GitHub Actions `release.yml` workflow. It publishes to PyPI using a [trusted publisher](https://docs.pypi.org/trusted-publishers/adding-a-publisher/) and creates a GitHub Release.
 
 ## Pull Request Guidelines
 

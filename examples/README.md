@@ -224,7 +224,7 @@ client.create_page_from_template(
 </td></tr></table>
 
 ```
-poetry run python examples/create_notion_page_from_template.py
+uv run python examples/create_notion_page_from_template.py
 ```
 
 ## 2.4. Create Notion page from a templae with dynamic values (content)
@@ -268,5 +268,5 @@ Generated page:
 </td></tr></table>
 
 ```bash
-poetry run python examples/create_notion_page_from_template_with_value.py # start date & end date inserted
+uv run python examples/create_notion_page_from_template_with_value.py # start date & end date inserted
 ```

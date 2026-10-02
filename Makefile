@@ -1,33 +1,32 @@
 .PHONY: fmt
 fmt:
-	poetry run black src tests examples
-	poetry run isort src tests examples
+	uv run --locked ruff check --fix src tests examples
+	uv run --locked ruff format src tests examples/*.py
 
 .PHONY: lint
 lint:
-	poetry run isort --check --diff src tests examples
-	poetry run black --check --diff src tests examples
-	poetry run flake8 src tests
+	uv run --locked ruff check src tests examples
+	uv run --locked ruff format --check src tests examples/*.py
 
 .PHONY: test
 test:
-	poetry run pytest tests/ --cov=autonote --cov-report=xml
+	uv run --locked pytest tests/ --cov=autonote --cov-report=xml
 
 .PHONY: docs
 docs:
-	poetry run make html --directory docs/
+	uv run --locked make html --directory docs/
 
 .PHONY: install
 install:
-	poetry install
+	uv sync --locked --all-groups
 
 .PHONY: e2e-notion
 e2e-notion:
-	poetry run python examples/create_notion_page.py
-	poetry run python examples/create_notion_page_from_template.py
-	poetry run python examples/create_notion_page_from_template_with_value.py
-	poetry run python examples/create_notion_page_from_template_with_value_content.py
+	uv run --locked python examples/create_notion_page.py
+	uv run --locked python examples/create_notion_page_from_template.py
+	uv run --locked python examples/create_notion_page_from_template_with_value.py
+	uv run --locked python examples/create_notion_page_from_template_with_value_content.py
 
 .PHONY: build
 build:
-	poetry build
+	uv build
