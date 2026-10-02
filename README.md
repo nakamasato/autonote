@@ -32,6 +32,8 @@ Automate creating daily, weekly, monthly, and quarterly manual repetitive docume
 
 ## Installation
 
+Python 3.13 or 3.14 is required.
+
 ```
 pip install autonote
 ```

@@ -5,78 +5,57 @@ on:
     paths:
       - .github/workflows/dev.yml
       - '**.py'
-      - poetry.lock
-      - pyporject.toml
+      - uv.lock
+      - pyproject.toml
+      - Makefile
+      - .python-version
   push:
     branches:
       - main
 
 jobs:
   ci:
-    # Set up operating system
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        python-version: [3.10.x, 3.11.x, 3.12.x]
-
-    # Define job steps
+        python-version: ['3.13', '3.14']
     steps:
-      - name: Check-out repository
+      - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - name: Set up Python
-        id: setup-python
-        uses: actions/setup-python@v7
+      - name: Install uv and Python
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9
         with:
+          version: '0.12.22'
           python-version: ${{ matrix.python-version }}
-
-      - name: Load cached Poetry installation
-        id: cached-poetry
-        uses: actions/cache@v6
-        with:
-          path: ~/.local  # the path depends on the OS
-          key: poetry-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-2.5.1
-
-      - name: Install poetry
-        if: steps.cached-poetry.outputs.cache-hit != 'true'
-        uses: snok/install-poetry@v1
-        with:
-          version: 2.5.1
-          virtualenvs-create: true # true by default
-          virtualenvs-in-project: true # false by default
-          installer-parallel: true
-
-      - name: Restore cached dependencies
-        uses: actions/cache@v6
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          enable-cache: true
 
       - name: Install package
         run: make install
 
       - name: Lint
-        if: matrix.python-version == '3.12' # only run on the latest Python version
+        if: matrix.python-version == '3.14'
         run: make lint
 
       - name: Test with pytest
         run: make test
 
       - name: Use Codecov to track coverage
-        if: matrix.python-version == '3.12' # only run on the latest Python version
+        if: matrix.python-version == '3.14'
         uses: codecov/codecov-action@v7
         with:
-          files: ./coverage.xml   # coverage report
+          files: ./coverage.xml
 
       - name: Build documentation
-        if: matrix.python-version == '3.12' # only run on the latest Python version
+        if: matrix.python-version == '3.14'
         run: make docs
 
       - name: Build package
         run: make build
 
       - name: Run against Notion demo page
-        if: matrix.python-version == '3.12' # only run on the latest Python version
+        if: matrix.python-version == '3.14' && github.event_name == 'push'
         env:
           NOTION_INTEGRATION_TOKEN: ${{ secrets.NOTION_INTEGRATION_TOKEN }}
         run: make e2e-notion

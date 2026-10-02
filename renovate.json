@@ -10,17 +10,5 @@
   },
   "ignorePaths": [
     ".tool-versions"
-  ],
-  "packageRules": [
-    {
-      "groupName": "GitHub Actions",
-      "matchManagers": [
-        "github-actions"
-      ],
-      "matchPackageNames": [
-        "python-semantic-release/python-semantic-release"
-      ],
-      "automerge": false
-    }
   ]
 }
