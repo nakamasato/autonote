@@ -5,7 +5,7 @@ description = "Automate taking notes"
 authors = [{name = "Masato Naka"}]
 license = "MIT"
 readme = "README.md"
-requires-python = ">=3.13,<3.15"
+requires-python = ">=3.15,<3.16"
 dependencies = [
     "notion-client>=3.0.0,<4.0.0",
     "atlassian-python-api>=5.0.0,<6.0.0",
